@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { BookOpen, Info, LibraryBig, LogIn, LogOut, PenSquare, Shield, User, UserPlus } from "lucide-react";
+import { BookOpen, Info, LibraryBig, LifeBuoy, LogIn, LogOut, PenSquare, Shield, User, UserPlus } from "lucide-react";
 import { useAuthStore } from "@/stores/authStore";
 import { BrandMark } from "./BrandMark";
 
@@ -13,7 +13,7 @@ export function SiteNav() {
     <nav className="mb-6 flex flex-wrap items-center justify-between gap-3 text-sm">
       <div className="flex flex-wrap items-center gap-4">
         <Link to="/" className="flex items-center gap-1.5 font-display text-parchment-200 hover:text-ember-400">
-          <BrandMark className="h-4 w-4" /> LivroQuest
+          <BrandMark className="h-7 w-7" /> LivroQuest
         </Link>
         <Link to="/biblioteca" className="flex items-center gap-1.5 text-parchment-400 hover:text-ember-400">
           <BookOpen className="h-3.5 w-3.5" aria-hidden="true" /> Biblioteca
@@ -23,9 +23,14 @@ export function SiteNav() {
         </Link>
 
         {currentUser && (
-          <Link to="/minha-biblioteca" className="flex items-center gap-1.5 text-parchment-400 hover:text-ember-400">
-            <LibraryBig className="h-3.5 w-3.5" aria-hidden="true" /> Minha biblioteca
-          </Link>
+          <>
+            <Link to="/minha-biblioteca" className="flex items-center gap-1.5 text-parchment-400 hover:text-ember-400">
+              <LibraryBig className="h-3.5 w-3.5" aria-hidden="true" /> Minha biblioteca
+            </Link>
+            <Link to="/suporte" className="flex items-center gap-1.5 text-parchment-400 hover:text-ember-400">
+              <LifeBuoy className="h-3.5 w-3.5" aria-hidden="true" /> Suporte
+            </Link>
+          </>
         )}
 
         {(currentUser?.role === "premium" || currentUser?.role === "admin") && (
