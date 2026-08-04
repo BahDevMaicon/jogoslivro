@@ -9,11 +9,11 @@ import {
   Library,
   Package,
   Save,
-  Sparkles,
   Swords,
   Trophy,
   User,
 } from "lucide-react";
+import { BrandMark } from "@/components/layout/BrandMark";
 import { SiteNav } from "@/components/layout/SiteNav";
 import { useAuthStore } from "@/stores/authStore";
 
@@ -65,9 +65,9 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-b from-nightwood-950/80 via-nightwood-950/70 to-nightwood-950/90" />
         <div className="relative">
           <div className="mb-4 flex items-center justify-center gap-2 text-ember-400">
-            <Sparkles className="h-5 w-5" aria-hidden="true" />
-            <span className="font-display text-xs uppercase tracking-[0.3em]">Livros-Jogo</span>
-            <Sparkles className="h-5 w-5" aria-hidden="true" />
+            <BrandMark className="h-5 w-5" />
+            <span className="font-display text-xs uppercase tracking-[0.3em]">LivroQuest</span>
+            <BrandMark className="h-5 w-5" />
           </div>
           <h1 className="mx-auto max-w-2xl font-display text-3xl text-parchment-50 sm:text-5xl">
             Viva aventuras onde cada escolha muda o destino.

@@ -78,7 +78,7 @@ export default function LibraryPage() {
           <span className="font-display text-xs uppercase tracking-[0.3em]">Engine de Gamebooks</span>
           <Sparkles className="h-5 w-5" aria-hidden="true" />
         </div>
-        <h1 className="font-display text-3xl text-parchment-50 sm:text-4xl">Biblioteca de Livros-Jogo</h1>
+        <h1 className="font-display text-3xl text-parchment-50 sm:text-4xl">Biblioteca LivroQuest</h1>
         <p className="mx-auto mt-3 max-w-xl font-serif text-lg text-parchment-200/80">
           Escolha uma aventura para começar. Suas escolhas moldarão o destino da história.
         </p>

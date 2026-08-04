@@ -1,4 +1,4 @@
-# Livros-Jogo — Engine de Gamebooks
+# LivroQuest — Engine de Gamebooks
 
 Uma engine genérica, em **React + TypeScript**, para executar livros-jogos (gamebooks) interativos a partir de arquivos **JSON**. Não contém nenhum texto, imagem ou marca de terceiros — apenas uma história original de demonstração, **"A Fortaleza das Sombras"**, incluída para validar todas as funcionalidades.
 

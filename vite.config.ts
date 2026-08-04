@@ -11,12 +11,12 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["favicon.svg", "robots.txt"],
       manifest: {
-        name: "Livros-Jogo - Engine de Gamebooks",
-        short_name: "Livros-Jogo",
+        name: "LivroQuest - Engine de Gamebooks",
+        short_name: "LivroQuest",
         description:
-          "Engine genérica para jogar livros-jogos (gamebooks) interativos originais.",
-        theme_color: "#1a1410",
-        background_color: "#1a1410",
+          "LivroQuest: engine para jogar livros-jogo (gamebooks) interativos originais.",
+        theme_color: "#0a0e15",
+        background_color: "#0a0e15",
         display: "standalone",
         start_url: "/",
         icons: [

@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import { BookOpen, Info, LibraryBig, LogIn, LogOut, PenSquare, Shield, Sparkles, User, UserPlus } from "lucide-react";
+import { BookOpen, Info, LibraryBig, LogIn, LogOut, PenSquare, Shield, User, UserPlus } from "lucide-react";
 import { useAuthStore } from "@/stores/authStore";
+import { BrandMark } from "./BrandMark";
 
 /** Barra fina de navegação do site (fora do fluxo de leitura): itens variam por papel do usuário logado. */
 export function SiteNav() {
@@ -12,7 +13,7 @@ export function SiteNav() {
     <nav className="mb-6 flex flex-wrap items-center justify-between gap-3 text-sm">
       <div className="flex flex-wrap items-center gap-4">
         <Link to="/" className="flex items-center gap-1.5 font-display text-parchment-200 hover:text-ember-400">
-          <Sparkles className="h-4 w-4" aria-hidden="true" /> Livros-Jogo
+          <BrandMark className="h-4 w-4" /> LivroQuest
         </Link>
         <Link to="/biblioteca" className="flex items-center gap-1.5 text-parchment-400 hover:text-ember-400">
           <BookOpen className="h-3.5 w-3.5" aria-hidden="true" /> Biblioteca
