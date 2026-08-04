@@ -1,0 +1,45 @@
+<svg viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A amostra biológica instável, guardada num armário">
+  <defs>
+    <pattern id="hach2" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#241a10" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="800" height="520" fill="#eee0bd"/>
+
+  <!-- prateleira do armário -->
+  <rect x="80" y="380" width="640" height="18" fill="#241a10"/>
+  <rect x="80" y="120" width="640" height="18" fill="#241a10"/>
+  <rect x="80" y="120" width="18" height="278" fill="#241a10"/>
+  <rect x="702" y="120" width="18" height="278" fill="#241a10"/>
+
+  <!-- sombra de fundo -->
+  <rect x="98" y="138" width="604" height="242" fill="url(#hach2)" opacity="0.28"/>
+
+  <!-- recipiente selado -->
+  <g>
+    <rect x="345" y="230" width="110" height="150" rx="12" fill="#f6ecd2" stroke="#241a10" stroke-width="5"/>
+    <ellipse cx="400" cy="230" rx="55" ry="14" fill="#f6ecd2" stroke="#241a10" stroke-width="5"/>
+    <ellipse cx="400" cy="230" rx="55" ry="14" fill="none" stroke="#241a10" stroke-width="2"/>
+    <rect x="370" y="205" width="60" height="26" rx="4" fill="#241a10"/>
+
+    <!-- algo se move lá dentro -->
+    <path d="M370,270 C385,290 380,310 400,320 C420,330 415,350 395,360 C378,368 365,345 372,325 C360,310 358,290 370,270 Z"
+          fill="#241a10" opacity="0.65"/>
+
+    <!-- etiqueta de risco biológico -->
+    <g transform="translate(400,300)">
+      <circle r="20" fill="#f6ecd2" stroke="#241a10" stroke-width="2.5"/>
+      <circle r="4.5" fill="#241a10"/>
+      <path d="M0,-4.5 A9,9 0 0 1 7.8,9" fill="none" stroke="#241a10" stroke-width="3"/>
+      <path d="M0,-4.5 A9,9 0 0 0 -7.8,9" fill="none" stroke="#241a10" stroke-width="3"/>
+      <path d="M-7.8,9 L7.8,9" stroke="#241a10" stroke-width="3"/>
+    </g>
+  </g>
+
+  <!-- vapor / condensação -->
+  <g stroke="#241a10" stroke-width="1.6" fill="none" opacity="0.6">
+    <path d="M330,220 C325,205 335,195 328,180"/>
+    <path d="M470,215 C475,200 465,190 472,175"/>
+  </g>
+</svg>

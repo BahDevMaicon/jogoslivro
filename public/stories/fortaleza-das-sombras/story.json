@@ -1,0 +1,439 @@
+{
+  "id": "fortaleza-das-sombras",
+  "version": "1.0.0",
+  "title": "A Fortaleza das Sombras",
+  "author": "Autor original (demonstração)",
+  "description": "Uma tempestade te empurra até os portões de uma fortaleza abandonada, tomada por uma escuridão antiga. Explore corredores esquecidos, enfrente guardiões sombrios e decida o destino do Senhor das Sombras que dorme no salão do trono.",
+  "genre": "Fantasia sombria",
+  "estimatedDuration": "20-30 minutos",
+  "cover": "/stories/fortaleza-das-sombras/cover.png",
+  "rulesText": "Você é guiado por três atributos: Habilidade, Energia e Sorte. Testes de Sorte pedem que você role dois dados e compare a soma com sua Sorte atual (sucesso se a soma for menor ou igual). Testes de Habilidade seguem a mesma lógica com o atributo testado. Em combate, você e o inimigo rolam dois dados e somam a própria Habilidade; quem tiver o maior total causa 2 pontos de dano em Energia ao oponente (empates não causam dano). O combate termina quando um dos lados chega a zero de Energia.",
+  "rules": {
+    "useDefaultRules": true,
+    "fatigueSystem": true,
+    "provisions": true,
+    "restSystem": true,
+    "combatLuck": true
+  },
+  "startSection": "1",
+  "characterCreation": {
+    "skill": { "dice": 1, "sides": 6, "modifier": 6 },
+    "stamina": { "dice": 2, "sides": 6, "modifier": 12 },
+    "luck": { "dice": 1, "sides": 6, "modifier": 6 },
+    "gold": 5,
+    "provisions": 10
+  },
+  "items": [
+    {
+      "id": "rusty-key",
+      "name": "Chave Enferrujada",
+      "description": "Uma chave antiga, coberta de ferrugem, encontrada entre os escombros das ruínas externas.",
+      "kind": "key",
+      "discardable": false,
+      "icon": "key"
+    },
+    {
+      "id": "ancient-sword",
+      "name": "Espada Antiga",
+      "description": "Uma lâmina esquecida que ainda guarda um brilho estranho. Concede vantagem em combate.",
+      "kind": "weapon",
+      "damageBonus": 2,
+      "icon": "sword"
+    },
+    {
+      "id": "healing-potion",
+      "name": "Poção de Cura",
+      "description": "Um frasco de líquido vermelho-escuro que restaura vitalidade quando bebido.",
+      "kind": "consumable",
+      "consumable": true,
+      "onUseEffects": [{ "stat": "stamina", "value": 6 }],
+      "icon": "potion",
+      "examineText": "Ao erguer o frasco contra a luz, você percebe reflexos dourados girando lentamente dentro do líquido vermelho-escuro — um sinal de que a poção ainda está potente."
+    },
+    {
+      "id": "leather-armor",
+      "name": "Armadura de Couro Reforçada",
+      "description": "Uma armadura simples, mas reforçada com placas de metal costuradas ao couro envelhecido.",
+      "kind": "armor",
+      "defenseBonus": 1,
+      "icon": "shield"
+    }
+  ],
+  "enemies": [
+    {
+      "id": "guarda-fortaleza",
+      "name": "Guarda da Fortaleza",
+      "skill": 6,
+      "stamina": 8,
+      "description": "Um antigo soldado, ainda vestindo a armadura enferrujada de seu posto eterno.",
+      "defeatText": "O guarda desmorona em um monte de poeira e metal enferrujado.",
+      "points": 10,
+      "lootItemId": "leather-armor",
+      "lootChancePercent": 50
+    },
+    {
+      "id": "sombra-sussurrante",
+      "name": "Sombra Sussurrante",
+      "skill": 7,
+      "stamina": 10,
+      "description": "Uma silhueta de trevas que sussurra seu nome antes de atacar.",
+      "defeatText": "A sombra se dissolve em um lamento distante, deixando um resíduo escuro no ar.",
+      "points": 15
+    },
+    {
+      "id": "senhor-das-sombras",
+      "name": "Senhor das Sombras",
+      "skill": 9,
+      "stamina": 14,
+      "description": "O antigo mestre da fortaleza, agora uma entidade de escuridão pura.",
+      "defeatText": "O Senhor das Sombras solta um grito que ecoa por toda a fortaleza antes de se desfazer em cinzas.",
+      "points": 30
+    }
+  ],
+  "sections": {
+    "1": {
+      "id": "1",
+      "title": "Os portões da fortaleza",
+      "paragraphs": [
+        "Você está diante de uma antiga fortaleza de pedra escura. Uma tempestade se aproxima pelo norte, e relâmpagos iluminam por instantes as torres cobertas de musgo.",
+        "Os portões principais estão entreabertos, como se alguém — ou algo — os tivesse deixado assim de propósito. Uma muralha lateral, mais baixa e coberta de hera, parece escalável. Um pouco mais adiante, ruínas de uma antiga guarita se erguem entre os destroços."
+      ],
+      "choices": [
+        { "id": "enter-main-door", "text": "Entrar pela porta principal", "target": "2" },
+        { "id": "climb-wall", "text": "Contornar e escalar a muralha lateral", "target": "3" },
+        { "id": "search-ruins", "text": "Vasculhar as ruínas da guarita antes de entrar", "target": "4" }
+      ]
+    },
+    "2": {
+      "id": "2",
+      "title": "O corredor das armadilhas",
+      "paragraphs": [
+        "Você atravessa o portão e entra em um corredor estreito. No chão, uma fileira de pedras levemente diferentes das demais chama sua atenção — uma placa de pressão, quase invisível na penumbra.",
+        "É tarde demais para recuar por completo, mas talvez sua sorte ainda possa te ajudar a atravessar sem ativar a armadilha."
+      ],
+      "onEnter": [
+        {
+          "type": "startTest",
+          "testType": "luck",
+          "onSuccess": "5",
+          "onFailure": "2f"
+        }
+      ],
+      "choices": []
+    },
+    "2f": {
+      "id": "2f",
+      "title": "Dardos das sombras",
+      "paragraphs": [
+        "Uma rajada de dardos emerge das paredes! Você se abaixa tarde demais e sente a picada fria de dois deles atravessando sua armadura.",
+        "Ferido, você se recompõe e segue em frente, mais cauteloso."
+      ],
+      "onEnter": [{ "type": "modifyStat", "stat": "stamina", "value": -3 }],
+      "choices": [
+        { "id": "continue-after-trap", "text": "Seguir em frente, com cuidado redobrado", "target": "5" }
+      ]
+    },
+    "3": {
+      "id": "3",
+      "title": "A muralha coberta de hera",
+      "paragraphs": [
+        "A hera antiga oferece boas pegadas, mas as pedras estão úmidas pela chuva que se aproxima. Escalar exigirá firmeza e um pouco de sorte com seus movimentos.",
+        "Você testa sua Habilidade para encontrar o caminho mais seguro até o topo."
+      ],
+      "onEnter": [
+        {
+          "type": "startTest",
+          "testType": "skill",
+          "stat": "skill",
+          "onSuccess": "5",
+          "onFailure": "3f"
+        }
+      ],
+      "choices": []
+    },
+    "3f": {
+      "id": "3f",
+      "title": "Um escorregão perigoso",
+      "paragraphs": [
+        "Seu pé escorrega em uma pedra solta e você cai os últimos metros, batendo com força contra o chão de pedra do outro lado da muralha.",
+        "Machucado, você se levanta e segue adiante, já dentro dos limites da fortaleza."
+      ],
+      "onEnter": [{ "type": "modifyStat", "stat": "stamina", "value": -2 }],
+      "choices": [
+        { "id": "continue-after-fall", "text": "Levantar-se e continuar", "target": "5" }
+      ]
+    },
+    "4": {
+      "id": "4",
+      "title": "As ruínas da guarita",
+      "allowEat": true,
+      "paragraphs": [
+        "Entre pedras caídas e restos de móveis apodrecidos, você encontra uma pequena bolsa de couro esquecida. Dentro dela há algumas moedas de ouro e uma chave enferrujada, gasta pelo tempo.",
+        "Guardando seus achados, você segue em direção à fortaleza."
+      ],
+      "onEnter": [
+        { "type": "addItem", "itemId": "rusty-key" },
+        { "type": "addGold", "value": 5 },
+        { "type": "logEvent", "message": "Você encontrou uma chave enferrujada e 5 moedas de ouro nas ruínas." }
+      ],
+      "choices": [
+        { "id": "enter-after-search", "text": "Entrar na fortaleza pela porta principal", "target": "5" }
+      ]
+    },
+    "5": {
+      "id": "5",
+      "title": "O guarda esquecido",
+      "paragraphs": [
+        "No fim do corredor, uma figura em armadura enferrujada se ergue lentamente de um banco de pedra. O Guarda da Fortaleza ainda cumpre seu antigo dever, séculos depois de seu último comandante ter partido.",
+        "Ele levanta uma lança cega pela ferrugem e avança contra você."
+      ],
+      "onEnter": [
+        {
+          "type": "startCombat",
+          "enemyIds": ["guarda-fortaleza"],
+          "onVictory": "6",
+          "onDefeat": "16",
+          "onFlee": "5f"
+        }
+      ],
+      "choices": []
+    },
+    "5f": {
+      "id": "5f",
+      "title": "Fuga pelos corredores",
+      "paragraphs": [
+        "Você escapa do guarda por pouco, correndo por corredores laterais até perder o inimigo de vista. Ofegante, você encontra o caminho para o salão central da fortaleza."
+      ],
+      "onEnter": [{ "type": "modifyStat", "stat": "stamina", "value": -1 }],
+      "choices": [
+        { "id": "reach-hall-after-flee", "text": "Seguir para o salão central", "target": "6" }
+      ]
+    },
+    "6": {
+      "id": "6",
+      "title": "O salão central",
+      "paragraphs": [
+        "Você chega a um vasto salão central, iluminado por tochas que nunca parecem se apagar. Duas portas se abrem à sua frente: uma pesada porta de carvalho a oeste, trancada com um cadeado enferrujado, e um arco aberto a leste, de onde vem um leve odor estranho.",
+        "Uma escadaria em espiral desce para as masmorras, ao fundo do salão."
+      ],
+      "choices": [
+        {
+          "id": "open-west-door",
+          "text": "Abrir a porta oeste com a chave enferrujada",
+          "target": "8",
+          "conditions": [{ "type": "hasItem", "itemId": "rusty-key" }],
+          "lockedReason": "A porta está trancada. Você precisa de uma chave para abri-la."
+        },
+        { "id": "go-east-door", "text": "Seguir pelo arco leste", "target": "9" },
+        { "id": "go-downstairs", "text": "Descer a escadaria em espiral para as masmorras", "target": "10" }
+      ]
+    },
+    "8": {
+      "id": "8",
+      "title": "A câmara do tesouro",
+      "allowRest": true,
+      "allowEat": true,
+      "paragraphs": [
+        "A porta range ao abrir, revelando uma pequena câmara empoeirada. Sobre um pedestal de pedra repousam uma espada antiga, ainda afiada, e um frasco de vidro com um líquido vermelho-escuro.",
+        "Você guarda os dois itens com cuidado antes de retornar ao salão central."
+      ],
+      "onEnter": [
+        { "type": "addItem", "itemId": "ancient-sword" },
+        { "type": "addItem", "itemId": "healing-potion" },
+        { "type": "logEvent", "message": "Você encontrou a Espada Antiga e uma Poção de Cura." }
+      ],
+      "choices": [
+        { "id": "return-to-hall-from-treasure", "text": "Voltar ao salão central e descer às masmorras", "target": "10" }
+      ]
+    },
+    "9": {
+      "id": "9",
+      "title": "A sala do vapor sombrio",
+      "paragraphs": [
+        "Assim que você atravessa o arco, um vapor escuro escapa de fendas no chão. O ar fica pesado e difícil de respirar. Você precisa contar com sua sorte para atravessar rapidamente sem ser afetado."
+      ],
+      "onEnter": [
+        {
+          "type": "startTest",
+          "testType": "luck",
+          "onSuccess": "10",
+          "onFailure": "9f"
+        }
+      ],
+      "choices": []
+    },
+    "9f": {
+      "id": "9f",
+      "title": "Vapor nos pulmões",
+      "paragraphs": [
+        "O vapor sombrio invade seus pulmões antes que você consiga sair da sala. Tossindo e tonto, você se arrasta para fora, sentindo suas forças diminuírem."
+      ],
+      "onEnter": [{ "type": "modifyStat", "stat": "stamina", "value": -4 }],
+      "choices": [
+        { "id": "continue-after-gas", "text": "Seguir cambaleante para a escadaria", "target": "10" }
+      ]
+    },
+    "10": {
+      "id": "10",
+      "title": "A escadaria das masmorras",
+      "paragraphs": [
+        "Ao descer os últimos degraus, a temperatura cai drasticamente. Das trevas emerge uma silhueta que sussurra seu nome — uma Sombra Sussurrante, criatura feita de pura escuridão.",
+        "Ela desliza em sua direção, e você precisa decidir como agir."
+      ],
+      "onEnter": [
+        {
+          "type": "startCombat",
+          "enemyIds": ["sombra-sussurrante"],
+          "onVictory": "11",
+          "onDefeat": "16",
+          "onFlee": "12"
+        }
+      ],
+      "choices": []
+    },
+    "11": {
+      "id": "11",
+      "title": "A essência das sombras",
+      "paragraphs": [
+        "Ao ser derrotada, a Sombra Sussurrante se dissolve, mas deixa para trás um resíduo escuro que paira no ar por um instante antes de ser absorvido por você.",
+        "Você sente um estranho poder percorrer seu corpo — talvez isso seja útil contra o que te espera no salão do trono."
+      ],
+      "onEnter": [
+        { "type": "setFlag", "flag": "shadow-essence" },
+        { "type": "logEvent", "message": "Você absorveu a essência das sombras." }
+      ],
+      "choices": [
+        { "id": "go-to-throne-room-after-victory", "text": "Seguir para o salão do trono", "target": "13" }
+      ]
+    },
+    "12": {
+      "id": "12",
+      "title": "Fuga pela passagem secreta",
+      "paragraphs": [
+        "Você foge da Sombra Sussurrante, escapando por uma fresta na parede que revela uma passagem secreta e estreita. O caminho é sufocante, mas leva você para além das masmorras.",
+        "Exausto, você emerge perto do salão do trono, sem o benefício que teria ganhado ao enfrentar a criatura."
+      ],
+      "onEnter": [{ "type": "modifyStat", "stat": "stamina", "value": -2 }],
+      "choices": [
+        { "id": "go-to-throne-room-after-flee", "text": "Seguir cautelosamente para o salão do trono", "target": "13" }
+      ]
+    },
+    "13": {
+      "id": "13",
+      "title": "O salão do trono",
+      "image": "/stories/fortaleza-das-sombras/salao-do-trono.png",
+      "paragraphs": [
+        "No centro de um salão imenso, sobre um trono esculpido em pedra negra, repousa o Senhor das Sombras — uma figura de escuridão pura, com olhos como brasas frias.",
+        "Ele se ergue lentamente ao perceber sua presença. Você sente que esta será a batalha decisiva."
+      ],
+      "choices": [
+        {
+          "id": "strike-with-sword",
+          "text": "Avançar e atacá-lo diretamente com a Espada Antiga",
+          "target": "14",
+          "conditions": [{ "type": "hasItem", "itemId": "ancient-sword" }],
+          "lockedReason": "Você precisa de uma arma poderosa para enfrentá-lo diretamente."
+        },
+        {
+          "id": "use-shadow-essence",
+          "text": "Usar a essência das sombras para desestabilizá-lo antes do ataque",
+          "target": "14b",
+          "conditions": [{ "type": "flagActive", "flag": "shadow-essence" }],
+          "lockedReason": "Você não absorveu nenhuma essência das sombras para usar contra ele."
+        },
+        {
+          "id": "retreat-from-fortress",
+          "text": "Recuar e abandonar a fortaleza enquanto ainda é possível",
+          "target": "18"
+        }
+      ]
+    },
+    "14": {
+      "id": "14",
+      "title": "O confronto final",
+      "paragraphs": [
+        "Com a Espada Antiga em mãos, você avança contra o Senhor das Sombras. A lâmina brilha ao encontrar a escuridão que emana de seu corpo.",
+        "A batalha final começa."
+      ],
+      "onEnter": [
+        {
+          "type": "startCombat",
+          "enemyIds": ["senhor-das-sombras"],
+          "onVictory": "17",
+          "onDefeat": "16"
+        }
+      ],
+      "choices": []
+    },
+    "14b": {
+      "id": "14b",
+      "title": "A essência contra a escuridão",
+      "paragraphs": [
+        "Você libera a essência das sombras que absorveu antes. Por um instante, o Senhor das Sombras vacila, sua forma tremeluzindo — sua própria essência sendo usada contra ele o enfraquece.",
+        "Aproveitando a brecha, você avança para o ataque."
+      ],
+      "onEnter": [
+        { "type": "modifyStat", "stat": "skill", "value": 2 },
+        { "type": "logEvent", "message": "A essência das sombras enfraquece o Senhor das Sombras, aumentando sua Habilidade em combate." },
+        {
+          "type": "startCombat",
+          "enemyIds": ["senhor-das-sombras"],
+          "onVictory": "17",
+          "onDefeat": "16"
+        }
+      ],
+      "choices": []
+    },
+    "16": {
+      "id": "16",
+      "title": "As sombras te consomem",
+      "paragraphs": [
+        "Suas forças se esvaem e a escuridão da fortaleza finalmente o alcança. Sua jornada termina aqui, entre as pedras antigas da Fortaleza das Sombras.",
+        "Talvez, em uma próxima tentativa, um caminho diferente leve a um destino melhor."
+      ],
+      "onEnter": [
+        {
+          "type": "endStory",
+          "ending": "defeat",
+          "title": "Consumido pelas Sombras",
+          "text": "Sua Energia chegou a zero. A Fortaleza das Sombras reivindica mais uma vítima para sua escuridão eterna."
+        }
+      ],
+      "choices": []
+    },
+    "17": {
+      "id": "17",
+      "title": "A luz retorna à fortaleza",
+      "paragraphs": [
+        "O Senhor das Sombras se desfaz em cinzas com um último grito que ecoa pelas paredes de pedra. Lentamente, uma luz pálida começa a atravessar as frestas das janelas, como se a fortaleza despertasse de um longo pesadelo.",
+        "Você deixa a Fortaleza das Sombras para trás, vitorioso, carregando histórias que poucos acreditariam."
+      ],
+      "onEnter": [
+        {
+          "type": "endStory",
+          "ending": "victory",
+          "title": "A Fortaleza Liberta",
+          "text": "Você derrotou o Senhor das Sombras e libertou a fortaleza de séculos de escuridão. Sua lenda começa aqui."
+        }
+      ],
+      "choices": []
+    },
+    "18": {
+      "id": "18",
+      "title": "A retirada prudente",
+      "paragraphs": [
+        "Você decide que viver para lutar outro dia vale mais do que um confronto direto com o Senhor das Sombras. Recuando com cuidado, você deixa a fortaleza para trás, levando consigo o que encontrou pelo caminho.",
+        "A Fortaleza das Sombras permanece de pé, seu mistério ainda intacto — talvez para uma futura jornada."
+      ],
+      "onEnter": [
+        {
+          "type": "endStory",
+          "ending": "neutral",
+          "title": "Uma Retirada Prudente",
+          "text": "Você escapou da fortaleza com vida, mas o Senhor das Sombras continua a espreitar em suas profundezas."
+        }
+      ],
+      "choices": []
+    }
+  }
+}

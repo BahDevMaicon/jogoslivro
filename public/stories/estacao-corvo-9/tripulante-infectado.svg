@@ -1,0 +1,32 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tripulante Infectado">
+  <rect width="400" height="400" fill="#171310"/>
+  <rect width="400" height="400" fill="none" stroke="#e8e2d5" stroke-width="2" opacity="0.3"/>
+
+  <!-- silhueta do corpo, uniforme -->
+  <g fill="#726a58" stroke="#e8e2d5" stroke-width="2.5">
+    <!-- cabeça, levemente inclinada -->
+    <ellipse cx="212" cy="95" rx="34" ry="38" transform="rotate(8 212 95)"/>
+    <!-- pescoço -->
+    <rect x="196" y="125" width="24" height="18"/>
+    <!-- torso -->
+    <path d="M160,150 C150,190 148,240 156,300 L250,300 C256,240 254,190 244,150 Z"/>
+    <!-- braço esquerdo, normal -->
+    <path d="M160,160 C130,190 118,230 122,270 L142,266 C140,230 150,196 172,168 Z"/>
+    <!-- braço direito, dobrado em ângulo errado -->
+    <path d="M244,158 C275,168 292,150 300,118 L282,108 C274,132 260,144 236,150 Z"/>
+    <!-- pernas -->
+    <path d="M162,300 L152,378 L182,378 L188,300 Z"/>
+    <path d="M244,300 L252,378 L222,378 L214,300 Z"/>
+  </g>
+
+  <!-- rachaduras de infecção -->
+  <g stroke="#e0a94a" stroke-width="2" fill="none" opacity="0.85">
+    <path d="M212,110 C205,140 220,160 205,185 C195,200 210,225 198,250"/>
+    <path d="M244,160 C260,180 250,205 268,225"/>
+    <path d="M170,190 C160,210 172,230 158,255"/>
+  </g>
+
+  <!-- olhos -->
+  <circle cx="200" cy="92" r="4" fill="#e0a94a"/>
+  <circle cx="222" cy="90" r="4" fill="#e0a94a"/>
+</svg>

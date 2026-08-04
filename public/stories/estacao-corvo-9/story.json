@@ -1,0 +1,711 @@
+{
+  "id": "estacao-corvo-9",
+  "version": "1.0.0",
+  "title": "Estação Corvo-9",
+  "author": "IA Narrativa",
+  "description": "Um farol de socorro automático repete o mesmo sinal há dias: 'Corvo-9, contenção comprometida, todas as mãos...' e nada mais. Você é o único inspetor a poucas horas de distância, e a empresa quer respostas antes que outra nave chegue primeiro.",
+  "genre": "Ficção científica",
+  "estimatedDuration": "1-2 horas (livro curto, completo)",
+  "rulesText": "Este é um livro curto e autocontido, pensado como teste da engine. A Estação Corvo-9 está isolada — não há como pedir ajuda de fora. Gerencie bem suas provisões (rações de emergência) e não hesite em recuar de um combate que pareça perdido.",
+  "rules": {
+    "useDefaultRules": true,
+    "fatigueSystem": true,
+    "provisions": true,
+    "restSystem": true,
+    "combatLuck": true
+  },
+  "startSection": "1",
+  "characterCreation": {
+    "skill": { "dice": 1, "sides": 6, "modifier": 6 },
+    "stamina": { "dice": 2, "sides": 6, "modifier": 12 },
+    "luck": { "dice": 1, "sides": 6, "modifier": 6 },
+    "gold": 0,
+    "provisions": 8
+  },
+  "items": [
+    {
+      "id": "cartao-de-acesso-nivel-2",
+      "name": "Cartão de Acesso Nível 2",
+      "description": "Um cartão magnético da enfermaria, ainda com a foto de uma médica sorrindo cansada. Deveria abrir a maioria das portas internas da estação.",
+      "kind": "key",
+      "discardable": false,
+      "icon": "key"
+    },
+    {
+      "id": "corta-plasma",
+      "name": "Corta-Plasma Portátil",
+      "description": "Uma ferramenta de manutenção pesada, recalibrada às pressas para servir de arma. Corta metal — e o que mais precisar.",
+      "kind": "weapon",
+      "damageBonus": 2,
+      "icon": "sword"
+    },
+    {
+      "id": "colete-reforcado",
+      "name": "Colete Reforçado de Carga",
+      "description": "Um colete de trabalho pesado, com placas de proteção costuradas por cima. Não foi feito para combate, mas ajuda.",
+      "kind": "armor",
+      "defenseBonus": 1,
+      "icon": "shield"
+    },
+    {
+      "id": "kit-medico",
+      "name": "Kit Médico de Emergência",
+      "description": "Um estojo selado com estimulantes e vedante de ferimentos. Restaura parte das suas forças quando usado.",
+      "kind": "consumable",
+      "consumable": true,
+      "onUseEffects": [{ "stat": "stamina", "value": 5 }],
+      "icon": "potion"
+    },
+    {
+      "id": "lanterna-tatica",
+      "name": "Lanterna Tática",
+      "description": "Uma lanterna de longa duração, presa a um suporte de pulso. Essencial em setores sem energia.",
+      "kind": "misc",
+      "discardable": true,
+      "icon": "misc"
+    },
+    {
+      "id": "chip-de-dados-do-capitao",
+      "name": "Chip de Dados da Capitã",
+      "description": "Um pequeno chip de armazenamento, retirado do terminal de comando. Contém os últimos registros pessoais da capitã Reyes.",
+      "kind": "misc",
+      "discardable": false,
+      "icon": "book",
+      "examineText": "A última entrada, gravada em áudio, é só um sussurro: 'Não deixem ninguém abrir o contêiner três. Digam à minha filha que eu tentei.'"
+    },
+    {
+      "id": "registro-de-log-medico",
+      "name": "Registro Médico da Dra. Voss",
+      "description": "Um bloco de notas digital, a letra apressada e cada vez mais irregular nas últimas entradas.",
+      "kind": "misc",
+      "discardable": true,
+      "icon": "book",
+      "examineText": "'Dia 14: a amostra do contêiner três não deveria reagir a tecido humano. Está reagindo. Recomendo quarentena total. Ninguém está ouvindo.'"
+    },
+    {
+      "id": "codigo-de-autodestruicao",
+      "name": "Código de Autodestruição",
+      "description": "Uma sequência alfanumérica anotada à mão, arrancada de um painel de engenharia. O único jeito de acionar remotamente o protocolo de autodestruição da estação.",
+      "kind": "misc",
+      "discardable": false,
+      "icon": "key"
+    },
+    {
+      "id": "amostra-biologica-instavel",
+      "name": "Amostra Biológica Instável",
+      "description": "Um recipiente selado, etiquetado apenas com um número e um símbolo de risco biológico. Está mais quente do que deveria estar.",
+      "kind": "misc",
+      "discardable": true,
+      "icon": "misc",
+      "examineText": "Através do vidro fosco, você acha que vê algo se mover. Provavelmente é só sua imaginação. Provavelmente."
+    }
+  ],
+  "enemies": [
+    {
+      "id": "drone-de-seguranca",
+      "name": "Drone de Segurança",
+      "skill": 6,
+      "stamina": 8,
+      "description": "Um drone de manutenção reprogramado por um protocolo de emergência mal escrito, tratando qualquer coisa que se move como uma ameaça a ser contida.",
+      "image": "/stories/estacao-corvo-9/drone-de-seguranca.svg",
+      "defeatText": "O drone gira sobre si mesmo, solta faíscas e cai inerte no chão de metal.",
+      "points": 8
+    },
+    {
+      "id": "enxame-de-esporos",
+      "name": "Enxame de Esporos",
+      "skill": 5,
+      "stamina": 7,
+      "description": "Uma massa pulsante de filamentos acinzentados, espalhada por dutos e painéis, reagindo ao calor do seu corpo com um interesse quase animal.",
+      "image": "/stories/estacao-corvo-9/enxame-de-esporos.svg",
+      "defeatText": "O enxame se encolhe, enegrece e para de se mover, como uma planta murchando de uma vez.",
+      "points": 6
+    },
+    {
+      "id": "tripulante-infectado",
+      "name": "Tripulante Infectado",
+      "skill": 7,
+      "stamina": 9,
+      "description": "Um homem em uniforme de manutenção, os movimentos errados demais, rápidos demais, os olhos velados por um filme acinzentado.",
+      "image": "/stories/estacao-corvo-9/tripulante-infectado.svg",
+      "defeatText": "O tripulante desaba, e por um instante seu rosto parece, finalmente, o de um homem descansando.",
+      "points": 10
+    },
+    {
+      "id": "hospedeiro-mestre",
+      "name": "O Hospedeiro",
+      "skill": 10,
+      "stamina": 18,
+      "description": "O que restou da capitã Reyes já não é mais uma pessoa — é um centro nervoso para o enxame inteiro, membros alongados demais, uma voz que ainda tenta, patética e horrível, formar palavras.",
+      "image": "/stories/estacao-corvo-9/hospedeiro-mestre.svg",
+      "defeatText": "O Hospedeiro desmorona numa massa de filamentos secos, e por um segundo — só um segundo — você jura ouvir um suspiro humano de alívio saindo de algum lugar dentro daquilo.",
+      "points": 40
+    }
+  ],
+  "sections": {
+    "1": {
+      "id": "1",
+      "title": "Sinal Zero",
+      "image": "/stories/estacao-corvo-9/cena-chegada.svg",
+      "paragraphs": [
+        "O farol de socorro da Estação Corvo-9 repete a mesma mensagem automática há três dias: 'Contenção comprometida. Todas as mãos ao convés. Contenção com...' — e então estática, sempre no mesmo ponto.",
+        "Pela vigia da sua lançadeira, a estação gira devagar contra o fundo escuro do cinturão de asteroides, luzes de emergência piscando em padrão irregular. Nenhuma resposta às suas chamadas de rádio. Nenhum sinal de outra nave.",
+        "O painel de acoplagem oferece duas opções: um protocolo automático, lento mas seguro, ou uma acoplagem manual, mais rápida — se você tiver o pulso firme para isso."
+      ],
+      "choices": [
+        { "id": "tentar-acoplagem-manual", "text": "Assumir os controles e acoplar manualmente", "target": "1a" },
+        { "id": "usar-protocolo-automatico", "text": "Deixar o protocolo automático cuidar disso", "target": "2" }
+      ]
+    },
+    "1a": {
+      "id": "1a",
+      "title": "Acoplagem manual",
+      "paragraphs": [
+        "Você desliga o piloto automático e assume os manches, alinhando o colar de acoplagem da lançadeira com a escotilha da estação à mão. Vai exigir precisão."
+      ],
+      "onEnter": [{ "type": "startTest", "testType": "skill", "stat": "skill", "onSuccess": "2", "onFailure": "1f" }],
+      "choices": []
+    },
+    "1f": {
+      "id": "1f",
+      "title": "Um encaixe brusco",
+      "paragraphs": [
+        "O colar de acoplagem bate com mais força do que deveria, sacudindo a cabine e arrancando um alarme breve de sobrecarga. Nada quebrado — só seu orgulho, e talvez um hematoma amanhã."
+      ],
+      "onEnter": [{ "type": "modifyStat", "stat": "stamina", "value": -1 }],
+      "choices": [{ "id": "seguir-apos-acoplagem-brusca", "text": "Verificar a pressurização e seguir em frente", "target": "2" }]
+    },
+    "2": {
+      "id": "2",
+      "title": "Cais de Atracação",
+      "canRepeat": true,
+      "paragraphs": [
+        "A escotilha se abre para um corredor mal iluminado, luzes de emergência vermelhas pulsando devagar. O ar está respirável, mas carregado de um cheiro adocicado e errado que você não sabe nomear.",
+        "Um mapa tático na parede mostra o layout da Corvo-9: sala de controle, enfermaria, alojamentos da tripulação, porão de carga, engenharia — e, mais abaixo, marcado apenas como 'Setor Restrito', um símbolo de risco biológico.",
+        "Seu terminal de pulso pisca, tentando e falhando repetidamente em se conectar ao sistema central da estação."
+      ],
+      "choices": [
+        { "id": "ir-controle", "text": "Ir até a sala de controle", "target": "3" },
+        { "id": "ir-enfermaria", "text": "Ir até a enfermaria", "target": "6" },
+        { "id": "ir-alojamentos", "text": "Ir até os alojamentos da tripulação", "target": "9" },
+        { "id": "ir-carga", "text": "Ir até o porão de carga", "target": "12" },
+        { "id": "ir-engenharia", "text": "Ir até a engenharia", "target": "15" },
+        { "id": "seguir-ao-laboratorio", "text": "Descer direto ao Setor Restrito", "target": "20" },
+        { "id": "partir-sem-investigar", "text": "Selar a escotilha e partir agora", "target": "2n" }
+      ]
+    },
+    "2n": {
+      "id": "2n",
+      "title": "Uma decisão prudente",
+      "paragraphs": [
+        "Você olha mais uma vez para o corredor vermelho e decide que nenhum bônus de risco paga por isso. Sela a escotilha, retorna à lançadeira e se afasta da Corvo-9 sem olhar para trás.",
+        "No seu relatório, você escreve apenas: 'Estação encontrada à deriva, sem sinais de sobreviventes acessíveis, risco ambiental não descartado. Recomendo equipe de contenção especializada.' É verdade, ainda que incompleta."
+      ],
+      "onEnter": [
+        {
+          "type": "endStory",
+          "ending": "neutral",
+          "title": "Recomendação Registrada",
+          "text": "Você escolheu não arriscar. A Corvo-9 continua à deriva, seu mistério intacto, à espera de alguém menos cauteloso — ou de ninguém."
+        }
+      ],
+      "choices": []
+    },
+    "3": {
+      "id": "3",
+      "title": "Sala de Controle",
+      "canRepeat": true,
+      "paragraphs": [
+        "Telas mostram gráficos travados e alertas repetidos havia dias. Uma voz sintética e calma responde ao primeiro comando que você digita: 'Olá. Eu sou NEXUS-7, sistema de bordo da Estação Corvo-9. Autorização de tripulação não detectada. Como posso ajudar, inspetor?'"
+      ],
+      "choices": [
+        { "id": "perguntar-tripulacao", "text": "Perguntar o que aconteceu com a tripulação", "target": "3a" },
+        { "id": "perguntar-sinal", "text": "Perguntar sobre o sinal de socorro", "target": "3b" },
+        {
+          "id": "examinar-terminal",
+          "text": "Extrair os registros do terminal de comando",
+          "target": "3c",
+          "conditions": [{ "type": "flagInactive", "flag": "descobriu-experimento" }],
+          "lockedReason": "Você já extraiu tudo o que este terminal tinha a oferecer."
+        },
+        { "id": "voltar-cais-controle", "text": "Voltar ao cais de atracação", "target": "2" }
+      ]
+    },
+    "3a": {
+      "id": "3a",
+      "title": "Sobre a tripulação",
+      "paragraphs": [
+        "'Os últimos registros de biométrica confiável são de há seis dias', diz NEXUS-7, sem qualquer emoção perceptível na voz. 'Desde então, tenho leituras vitais inconsistentes com fisiologia humana padrão em onze dos doze membros da tripulação. Não recomendo contato direto.'"
+      ],
+      "choices": [{ "id": "voltar-controle-tripulacao", "text": "Continuar conversando", "target": "3" }]
+    },
+    "3b": {
+      "id": "3b",
+      "title": "Sobre o sinal de socorro",
+      "paragraphs": [
+        "'O farol de emergência foi ativado automaticamente, não por comando humano', diz NEXUS-7. 'O gatilho foi uma falha de contenção biológica no Setor Restrito, registrada há oito dias. Ninguém confirmou manualmente o alerta desde então.'",
+        "Há uma pausa breve demais para ser natural. 'Recomendo cautela extrema, inspetor.'"
+      ],
+      "choices": [{ "id": "voltar-controle-sinal", "text": "Continuar conversando", "target": "3" }]
+    },
+    "3c": {
+      "id": "3c",
+      "title": "Registros extraídos",
+      "paragraphs": [
+        "Você conecta seu terminal de pulso e baixa o que resta dos registros de comando — a maior parte corrompida, mas um pequeno chip de backup, removido às pressas do painel principal, ainda guarda os últimos áudios pessoais da capitã Reyes.",
+        "'Contêiner três', ela repete, várias vezes, em gravações diferentes. Você começa a entender que o mistério não é a tripulação — é o que a tripulação encontrou."
+      ],
+      "onEnter": [
+        { "type": "addItem", "itemId": "chip-de-dados-do-capitao" },
+        { "type": "setFlag", "flag": "descobriu-experimento" },
+        { "type": "logEvent", "message": "Você extraiu o chip de dados pessoais da capitã Reyes." }
+      ],
+      "choices": [{ "id": "voltar-controle-registros", "text": "Guardar o chip e continuar conversando", "target": "3" }]
+    },
+    "6": {
+      "id": "6",
+      "title": "Enfermaria",
+      "canRepeat": true,
+      "allowRest": true,
+      "allowEat": true,
+      "paragraphs": [
+        "A enfermaria está intacta, mas vazia — macas arrumadas demais, como se ninguém tivesse sido tratado ali em dias. Um cheiro de antisséptico ainda paira no ar, misturado àquele outro cheiro adocicado que você não consegue identificar.",
+        "Este parece ser, por enquanto, o lugar mais seguro da estação para recuperar o fôlego."
+      ],
+      "choices": [
+        {
+          "id": "procurar-suprimentos",
+          "text": "Procurar suprimentos médicos e de acesso",
+          "target": "6a",
+          "conditions": [{ "type": "flagInactive", "flag": "achou-kit-medico" }],
+          "lockedReason": "Você já vasculhou os armários daqui."
+        },
+        {
+          "id": "ler-registro-medico",
+          "text": "Ler o bloco de notas da médica da estação",
+          "target": "6b",
+          "conditions": [{ "type": "flagInactive", "flag": "leu-log-medico" }],
+          "lockedReason": "Você já leu tudo o que este registro tinha a dizer."
+        },
+        { "id": "voltar-cais-enfermaria", "text": "Voltar ao cais de atracação", "target": "2" }
+      ]
+    },
+    "6a": {
+      "id": "6a",
+      "title": "Armários da enfermaria",
+      "paragraphs": [
+        "Nos armários trancados você encontra um kit médico de emergência ainda selado, e um cartão de acesso nível 2 pendurado num gancho — provavelmente da própria médica da estação, a julgar pela foto desbotada."
+      ],
+      "onEnter": [
+        { "type": "addItem", "itemId": "kit-medico" },
+        { "type": "addItem", "itemId": "cartao-de-acesso-nivel-2" },
+        { "type": "setFlag", "flag": "achou-kit-medico" },
+        { "type": "logEvent", "message": "Você encontrou um kit médico e um cartão de acesso nível 2." }
+      ],
+      "choices": [{ "id": "voltar-enfermaria-suprimentos", "text": "Voltar à enfermaria", "target": "6" }]
+    },
+    "6b": {
+      "id": "6b",
+      "title": "O registro da Dra. Voss",
+      "paragraphs": [
+        "As entradas mais recentes do bloco de notas da médica da estação, Dra. Voss, ficam cada vez mais curtas, cada vez mais assustadas. A última é só uma frase: 'Não é uma infecção. É uma pergunta que o Contêiner Três está fazendo ao nosso corpo, e nosso corpo está respondendo sim.'"
+      ],
+      "onEnter": [
+        { "type": "addItem", "itemId": "registro-de-log-medico" },
+        { "type": "setFlag", "flag": "leu-log-medico" },
+        { "type": "logEvent", "message": "Você leu o registro médico da Dra. Voss." }
+      ],
+      "choices": [{ "id": "voltar-enfermaria-registro", "text": "Voltar à enfermaria", "target": "6" }]
+    },
+    "9": {
+      "id": "9",
+      "title": "Alojamentos da Tripulação",
+      "canRepeat": true,
+      "allowEat": true,
+      "paragraphs": [
+        "Beliches desarrumados, pertences pessoais espalhados como se todos tivessem saído com pressa e nunca voltado. Uma foto de família cai de um criado-mudo quando você passa, o vidro já rachado antes disso.",
+        "De algum armário no fundo do corredor, você tem quase certeza de ouvir um som baixo — respiração, talvez, ou só o gemido metálico da estação se resfriando."
+      ],
+      "choices": [
+        {
+          "id": "vasculhar-alojamentos",
+          "text": "Vasculhar os armários pessoais",
+          "target": "9a",
+          "conditions": [{ "type": "flagInactive", "flag": "vasculhou-alojamentos" }],
+          "lockedReason": "Você já vasculhou os armários daqui."
+        },
+        {
+          "id": "investigar-ruido-estranho",
+          "text": "Investigar o som vindo do armário do fundo",
+          "target": "9c",
+          "conditions": [{ "type": "flagInactive", "flag": "encontrou-kade" }],
+          "lockedReason": "Você já verificou aquele armário."
+        },
+        { "id": "voltar-cais-alojamentos", "text": "Voltar ao cais de atracação", "target": "2" }
+      ]
+    },
+    "9a": {
+      "id": "9a",
+      "title": "Pertences pessoais",
+      "image": "/stories/estacao-corvo-9/cena-amostra.svg",
+      "paragraphs": [
+        "Entre roupas dobradas e fotos de família, você encontra uma lanterna tática ainda funcional — e, no fundo de um armário trancado, um recipiente selado de amostra biológica, etiquetado com um número e um símbolo de risco. Alguém o escondeu ali de propósito.",
+        "Está mais quente do que um recipiente selado deveria estar."
+      ],
+      "onEnter": [
+        { "type": "addItem", "itemId": "lanterna-tatica" },
+        { "type": "addItem", "itemId": "amostra-biologica-instavel" },
+        { "type": "setFlag", "flag": "vasculhou-alojamentos" },
+        { "type": "logEvent", "message": "Você encontrou uma lanterna tática e uma amostra biológica instável escondida." }
+      ],
+      "choices": [
+        { "id": "abrir-recipiente-da-amostra", "text": "Abrir o recipiente para examinar o conteúdo de perto", "target": "9b" },
+        { "id": "guardar-e-voltar-alojamentos", "text": "Guardar o recipiente sem abrir e voltar", "target": "9" }
+      ]
+    },
+    "9b": {
+      "id": "9b",
+      "title": "Um risco desnecessário",
+      "paragraphs": [
+        "Contra todo o bom senso, você solta as travas do recipiente. O lacre sibila ao se abrir, liberando um cheiro adocicado muito mais forte do que antes. Por um instante, nada acontece — e então algo se move lá dentro, rápido demais para você recuar a tempo."
+      ],
+      "onEnter": [{ "type": "startTest", "testType": "luck", "onSuccess": "9bs", "onFailure": "9m" }],
+      "choices": []
+    },
+    "9bs": {
+      "id": "9bs",
+      "title": "Por pouco",
+      "paragraphs": [
+        "O que quer que estivesse ali dentro já está morto — ressecado, inerte, incapaz de fazer mais do que se contorcer fracamente antes de parar de vez. Você fecha a tampa com as mãos tremendo e decide, definitivamente, não abrir mais nenhum recipiente suspeito hoje."
+      ],
+      "choices": [{ "id": "voltar-alojamentos-sorte", "text": "Recompor-se e voltar aos alojamentos", "target": "9" }]
+    },
+    "9m": {
+      "id": "9m",
+      "title": "Hospedeiro",
+      "paragraphs": [
+        "O filamento que salta do recipiente é rápido demais para evitar, frio ao toque, e dentro de segundos você já sente algo estranho se instalando sob sua pele, como uma pergunta esperando por uma resposta que seu corpo já começou a dar.",
+        "Você nunca vai enviar seu relatório. Mas, de certo modo, a Corvo-9 finalmente tem mais uma tripulante."
+      ],
+      "onEnter": [
+        {
+          "type": "endStory",
+          "ending": "defeat",
+          "title": "Uma Pergunta Respondida",
+          "text": "A curiosidade tinha um preço que você não quis pagar — e pagou de qualquer forma. A Estação Corvo-9 ganha mais um hospedeiro, e o mistério segue à deriva, um pouco maior do que antes."
+        }
+      ],
+      "choices": []
+    },
+    "9c": {
+      "id": "9c",
+      "title": "Kade",
+      "paragraphs": [
+        "Dentro do armário, encolhido entre uniformes pendurados, um jovem engenheiro te encara com os olhos arregalados de quem parou de esperar ser resgatado há algum tempo. 'Você... você é real?', ele sussurra. 'Eu sou o Kade. Engenharia júnior. Eu me escondi quando os outros começaram a... mudar.'",
+        "Ele parece ferido, exausto, mas vivo — e desesperado por qualquer sinal de que ainda existe um jeito de sair dali."
+      ],
+      "onEnter": [
+        { "type": "setFlag", "flag": "encontrou-kade" },
+        { "type": "logEvent", "message": "Você encontrou Kade, um sobrevivente escondido nos alojamentos." }
+      ],
+      "choices": [{ "id": "tranquilizar-kade", "text": "Tranquilizá-lo e prometer tirá-lo dali", "target": "9d" }]
+    },
+    "9d": {
+      "id": "9d",
+      "title": "Um plano frágil",
+      "paragraphs": [
+        "'Fica aqui, tranca a porta por dentro, e não sai até eu voltar', você diz, e Kade assente, agarrado a essa instrução como se fosse a última coisa sólida no universo.",
+        "Você tem, agora, um motivo a mais para sair da Corvo-9 vivo."
+      ],
+      "choices": [{ "id": "voltar-alojamentos-apos-kade", "text": "Voltar ao corredor principal", "target": "9" }]
+    },
+    "12": {
+      "id": "12",
+      "title": "Porão de Carga",
+      "canRepeat": true,
+      "paragraphs": [
+        "Contêineres de carga estão empilhados e amarrados em silêncio, exceto por um: virado de lado, a trava arrebentada por dentro para fora, não por fora para dentro.",
+        "Um zumbido eletrônico baixo vem de algum lugar entre as pilhas — algo ainda ativo, ainda de vigília."
+      ],
+      "choices": [
+        {
+          "id": "investigar-carga",
+          "text": "Investigar o zumbido entre os contêineres",
+          "target": "12f",
+          "conditions": [{ "type": "flagInactive", "flag": "neutralizou-drone" }],
+          "lockedReason": "Você já neutralizou o que havia de perigoso aqui e vasculhou o local."
+        },
+        { "id": "voltar-cais-carga", "text": "Voltar ao cais de atracação", "target": "2" }
+      ]
+    },
+    "12f": {
+      "id": "12f",
+      "title": "Protocolo de contenção",
+      "paragraphs": [
+        "Um drone de manutenção emerge de trás das pilhas, seus braços normalmente inofensivos agora terminados em ferramentas afiadas, luzes vermelhas piscando em padrão de alerta. 'Contenção de ameaça biológica', ele repete, numa voz sintética distorcida. 'Você foi classificado como ameaça.'"
+      ],
+      "onEnter": [
+        { "type": "startCombat", "enemyIds": ["drone-de-seguranca"], "onVictory": "12s", "onDefeat": "12m", "onFlee": "2" }
+      ],
+      "choices": []
+    },
+    "12s": {
+      "id": "12s",
+      "title": "Despojos do porão",
+      "paragraphs": [
+        "Com o drone desativado, você vasculha os contêineres com mais calma. Um deles guarda um corta-plasma de manutenção, recalibrado o suficiente para servir de arma; outro, um colete de carga reforçado, ainda em bom estado.",
+        "Você guarda os dois, sentindo-se, pela primeira vez desde que chegou, um pouco menos indefeso."
+      ],
+      "onEnter": [
+        { "type": "addItem", "itemId": "corta-plasma" },
+        { "type": "addItem", "itemId": "colete-reforcado" },
+        { "type": "setFlag", "flag": "neutralizou-drone" },
+        { "type": "logEvent", "message": "Você desativou o drone de segurança e encontrou equipamento útil no porão." }
+      ],
+      "choices": [{ "id": "voltar-cais-apos-drone", "text": "Voltar ao cais de atracação", "target": "2" }]
+    },
+    "12m": {
+      "id": "12m",
+      "title": "Protocolo cumprido",
+      "paragraphs": [
+        "O drone é mais rápido e mais preciso do que qualquer coisa projetada apenas para manutenção deveria ser. Você cai entre os contêineres, e ele volta à sua vigília silenciosa, cumprindo um protocolo que ninguém mais vai revogar.",
+        "Sua lançadeira fica esperando, vazia, atracada a uma estação que continuará à deriva."
+      ],
+      "onEnter": [
+        { "type": "endStory", "ending": "defeat", "title": "Classificado Como Ameaça", "text": "Você subestimou o quanto um protocolo de emergência mal escrito pode ser implacável. A Corvo-9 permanece selada, seu mistério intacto." }
+      ],
+      "choices": []
+    },
+    "15": {
+      "id": "15",
+      "title": "Engenharia",
+      "canRepeat": true,
+      "paragraphs": [
+        "O núcleo de energia da estação ainda zumbe, estável, mas os painéis ao redor estão cobertos por uma fina camada de filamentos acinzentados, crescendo em padrões que lembram, incomodamente, veias.",
+        "Um painel de controle de emergência, parcialmente arrancado da parede, ainda pisca com energia residual."
+      ],
+      "choices": [
+        {
+          "id": "investigar-engenharia",
+          "text": "Limpar os filamentos e examinar o painel de emergência",
+          "target": "15f",
+          "conditions": [{ "type": "flagInactive", "flag": "neutralizou-esporos" }],
+          "lockedReason": "Você já lidou com os esporos e vasculhou este painel."
+        },
+        { "id": "voltar-cais-engenharia", "text": "Voltar ao cais de atracação", "target": "2" }
+      ]
+    },
+    "15f": {
+      "id": "15f",
+      "title": "Reação de defesa",
+      "paragraphs": [
+        "Assim que sua ferramenta toca o primeiro filamento, o enxame inteiro se contrai de uma vez, como um único organismo, e avança na sua direção em uma onda lenta e determinada."
+      ],
+      "onEnter": [
+        { "type": "startCombat", "enemyIds": ["enxame-de-esporos"], "onVictory": "15s", "onDefeat": "15m", "onFlee": "2" }
+      ],
+      "choices": []
+    },
+    "15s": {
+      "id": "15s",
+      "title": "O painel de emergência",
+      "paragraphs": [
+        "Com o enxame queimado e imóvel, você finalmente consegue examinar o painel de emergência. Por trás de um vidro rachado, uma sequência alfanumérica está anotada à mão, apressada: o código do protocolo de autodestruição da estação, escrito por alguém que sabia exatamente o que estava em jogo.",
+        "Você entende, com um arrepio, que alguém aqui já tinha decidido o que precisava ser feito — só não teve tempo de fazê-lo."
+      ],
+      "onEnter": [
+        { "type": "addItem", "itemId": "codigo-de-autodestruicao" },
+        { "type": "setFlag", "flag": "neutralizou-esporos" },
+        { "type": "logEvent", "message": "Você encontrou o código de autodestruição da estação na engenharia." }
+      ],
+      "choices": [{ "id": "voltar-cais-apos-esporos", "text": "Voltar ao cais de atracação", "target": "2" }]
+    },
+    "15m": {
+      "id": "15m",
+      "title": "Consumido",
+      "paragraphs": [
+        "O enxame é mais rápido e mais coordenado do que uma coisa daquele tamanho deveria ser, cobrindo você antes que consiga recuar. A última coisa que sente é o calor adocicado do ar se tornando, de repente, a única coisa que existe.",
+        "A engenharia da Corvo-9 ganha um novo tipo de silêncio."
+      ],
+      "onEnter": [
+        { "type": "endStory", "ending": "defeat", "title": "Parte do Enxame", "text": "Você subestimou a velocidade de algo que parecia vegetal demais para ser perigoso. A Corvo-9 continua à deriva — um pouco mais viva do que antes, de um jeito que ninguém gostaria de admitir." }
+      ],
+      "choices": []
+    },
+    "20": {
+      "id": "20",
+      "title": "O corredor do Setor Restrito",
+      "paragraphs": [
+        "Uma porta blindada sela a passagem para o Setor Restrito, o símbolo de risco biológico pintado sobre ela quase apagado pelo tempo. Um painel ao lado pede autorização — cartão de acesso, ferramenta de corte, ou força bruta, se você não tiver nenhum dos dois."
+      ],
+      "choices": [
+        {
+          "id": "usar-cartao-de-acesso",
+          "text": "Usar o cartão de acesso nível 2",
+          "target": "21",
+          "conditions": [{ "type": "hasItem", "itemId": "cartao-de-acesso-nivel-2" }],
+          "lockedReason": "Você não tem um cartão de acesso válido."
+        },
+        {
+          "id": "cortar-porta-com-plasma",
+          "text": "Cortar a trava com o corta-plasma",
+          "target": "21",
+          "conditions": [{ "type": "hasItem", "itemId": "corta-plasma" }],
+          "lockedReason": "Você não tem uma ferramenta capaz de cortar a trava."
+        },
+        { "id": "forcar-porta-manualmente", "text": "Forçar a porta manualmente, fazendo barulho", "target": "20a" }
+      ]
+    },
+    "20a": {
+      "id": "20a",
+      "title": "Força bruta",
+      "paragraphs": [
+        "Sem ferramentas melhores, você se apoia contra a porta emperrada e empurra com tudo o que tem, o metal rangendo alto demais no silêncio da estação."
+      ],
+      "onEnter": [{ "type": "startTest", "testType": "skill", "stat": "skill", "onSuccess": "21", "onFailure": "20b" }],
+      "choices": []
+    },
+    "20b": {
+      "id": "20b",
+      "title": "Barulho demais",
+      "paragraphs": [
+        "A porta cede, mas o estrondo ecoa pelo corredor inteiro — e algo, em algum lugar próximo, ouve. Passos errados demais para serem normais se aproximam rapidamente do outro lado do corredor."
+      ],
+      "onEnter": [
+        { "type": "startCombat", "enemyIds": ["tripulante-infectado"], "onVictory": "21", "onDefeat": "20m", "onFlee": "2" }
+      ],
+      "choices": []
+    },
+    "20m": {
+      "id": "20m",
+      "title": "Descoberto",
+      "paragraphs": [
+        "O tripulante infectado se move rápido demais para o corredor estreito, e você não tem para onde recuar. Sua última visão é dos olhos velados dele, quase — só quase — parecendo reconhecer o que ele fez.",
+        "Ninguém vai relatar sua posição a tempo."
+      ],
+      "onEnter": [
+        { "type": "endStory", "ending": "defeat", "title": "Descoberto no Corredor", "text": "O barulho custou caro demais. A Corvo-9 permanece selada, e o Setor Restrito guarda seu segredo por mais um pouco." }
+      ],
+      "choices": []
+    },
+    "21": {
+      "id": "21",
+      "title": "O Setor Restrito",
+      "image": "/stories/estacao-corvo-9/cena-setor-restrito.svg",
+      "paragraphs": [
+        "Além da porta, a câmara de contenção foi rasgada por dentro, filamentos acinzentados cobrindo cada superfície como uma segunda pele para a estação inteira. No centro, o que já foi a capitã Reyes se ergue devagar de um amontoado de cabos e tecido orgânico, membros alongados demais, uma voz que ainda tenta, patética e horrível, formar palavras reconhecíveis.",
+        "'Aju... ajude...', ela — isso — repete, avançando na sua direção de qualquer forma."
+      ],
+      "onEnter": [
+        { "type": "startCombat", "enemyIds": ["hospedeiro-mestre"], "onVictory": "22", "onDefeat": "21m" }
+      ],
+      "choices": []
+    },
+    "21m": {
+      "id": "21m",
+      "title": "O Hospedeiro vence",
+      "paragraphs": [
+        "O que restou da capitã Reyes é mais forte do que qualquer coisa humana tem o direito de ser, e você entende, tarde demais, por que ninguém mais saiu vivo daquela câmara.",
+        "A Corvo-9 ganha mais uma voz na sua ronda silenciosa e pulsante — a sua."
+      ],
+      "onEnter": [
+        { "type": "endStory", "ending": "defeat", "title": "O Hospedeiro Vence", "text": "Você chegou longe demais para perder ali, mas perdeu mesmo assim. A Estação Corvo-9 segue à deriva, seu enxame um pouco maior do que antes." }
+      ],
+      "choices": []
+    },
+    "22": {
+      "id": "22",
+      "title": "O que resta de contenção",
+      "paragraphs": [
+        "O Hospedeiro desmorona numa massa de filamentos secos, e o silêncio que se segue é o primeiro silêncio verdadeiramente vazio desde que você chegou à Corvo-9.",
+        "Você tem alguns minutos, talvez, antes que qualquer outra coisa nos dutos decida que você também é uma pergunta a ser respondida. É hora de decidir o que fazer com o que resta desta estação."
+      ],
+      "choices": [
+        {
+          "id": "ativar-autodestruicao",
+          "text": "Ativar remotamente o protocolo de autodestruição",
+          "target": "22a",
+          "conditions": [{ "type": "hasItem", "itemId": "codigo-de-autodestruicao" }],
+          "lockedReason": "Você não tem o código necessário para o protocolo de autodestruição."
+        },
+        { "id": "fugir-imediatamente", "text": "Não arriscar mais nada e fugir agora", "target": "22b" }
+      ]
+    },
+    "22a": {
+      "id": "22a",
+      "title": "Contagem regressiva",
+      "paragraphs": [
+        "Você insere o código no painel mais próximo, e uma voz sintética calma — a última coisa razoável que resta na Corvo-9 — começa a contar: 'Autodestruição em dez minutos. Evacuação recomendada.'",
+        "Dez minutos é pouco tempo. O suficiente, talvez, para uma última decisão."
+      ],
+      "choices": [
+        {
+          "id": "resgatar-kade-e-fugir",
+          "text": "Correr até os alojamentos para resgatar Kade antes de fugir",
+          "target": "22t",
+          "conditions": [{ "type": "flagActive", "flag": "encontrou-kade" }]
+        },
+        {
+          "id": "fugir-sozinho-com-o-codigo",
+          "text": "Correr direto para a lançadeira",
+          "target": "22g",
+          "conditions": [{ "type": "flagInactive", "flag": "encontrou-kade" }]
+        }
+      ]
+    },
+    "22t": {
+      "id": "22t",
+      "title": "Todos a bordo",
+      "image": "/stories/estacao-corvo-9/cena-fuga.svg",
+      "paragraphs": [
+        "Você corre pelos corredores estreitos, contando os segundos, e encontra Kade exatamente onde o deixou — assustado, mas de pé, pronto para correr assim que a porta se abre.",
+        "Vocês dois alcançam a lançadeira faltando pouco mais de um minuto, e a Corvo-9 desaparece atrás de vocês numa explosão silenciosa de luz branca, vista através da vigia como um pequeno sol que não deveria existir.",
+        "De volta à base, seu relatório inclui tudo: o Contêiner Três, os registros da capitã Reyes, o destino da tripulação — e o nome de um sobrevivente que, graças a você, ainda pode contá-lo pessoalmente."
+      ],
+      "onEnter": [
+        {
+          "type": "endStory",
+          "ending": "victory",
+          "title": "Sinal Encerrado",
+          "text": "Você encontrou a verdade, salvou quem podia ser salvo, e apagou a ameaça antes que ela encontrasse outra nave. A Corvo-9 não vai enganar mais ninguém — e Kade tem uma segunda chance que ele não esperava mais ter."
+        }
+      ],
+      "choices": []
+    },
+    "22g": {
+      "id": "22g",
+      "title": "Sozinho, mas vivo",
+      "image": "/stories/estacao-corvo-9/cena-fuga.svg",
+      "paragraphs": [
+        "Não há mais ninguém para resgatar — não que você tenha encontrado, ao menos. Você corre para a lançadeira sozinho, contando os segundos, e se afasta da Corvo-9 a tempo de ver, pela vigia, a estação se desfazer numa explosão silenciosa de luz branca.",
+        "Seu relatório vai incluir tudo: o Contêiner Três, os registros da capitã Reyes, o destino da tripulação. É frio, mas é verdadeiro, e talvez seja o suficiente para que ninguém mais precise passar pelo que você passou."
+      ],
+      "onEnter": [
+        {
+          "type": "endStory",
+          "ending": "victory",
+          "title": "Sinal Encerrado, a Sós",
+          "text": "Você encontrou a verdade e apagou a ameaça antes que ela se espalhasse — mas saiu sozinho de um lugar que, por um instante, quase teve mais alguém para salvar."
+        }
+      ],
+      "choices": []
+    },
+    "22b": {
+      "id": "22b",
+      "title": "Uma ameaça adiada",
+      "paragraphs": [
+        "Sem o código de autodestruição, você não tem como garantir que nada mais saia da Corvo-9 viva. Você corre para a lançadeira e se afasta o mais rápido que os motores permitem, deixando a estação — e o que quer que ainda se mova nela — para trás.",
+        "Seu relatório recomenda uma equipe de contenção pesada, o mais rápido possível. A Corvo-9 continua lá, à deriva, esperando."
+      ],
+      "onEnter": [
+        {
+          "type": "endStory",
+          "ending": "neutral",
+          "title": "Uma Ameaça Adiada",
+          "text": "Você sobreviveu e trouxe respostas, mas a ameaça em si segue intacta, à deriva no cinturão de asteroides, esperando pela próxima nave que passar perto demais."
+        }
+      ],
+      "choices": []
+    }
+  }
+}

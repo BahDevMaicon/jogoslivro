@@ -1,0 +1,41 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Enxame de Esporos">
+  <rect width="400" height="400" fill="#151009"/>
+  <rect width="400" height="400" fill="none" stroke="#e8e2d5" stroke-width="2" opacity="0.3"/>
+
+  <!-- filamentos radiais -->
+  <g stroke="#8a7a55" stroke-width="2.5" fill="none" opacity="0.85">
+    <path d="M200,205 C160,170 120,150 70,140"/>
+    <path d="M200,205 C170,150 160,100 140,60"/>
+    <path d="M200,205 C210,145 240,100 250,55"/>
+    <path d="M200,205 C240,170 280,155 335,150"/>
+    <path d="M200,205 C230,250 260,280 320,300"/>
+    <path d="M200,205 C190,260 190,300 175,350"/>
+    <path d="M200,205 C160,250 130,270 75,290"/>
+    <path d="M200,205 C150,220 100,215 60,225"/>
+  </g>
+
+  <!-- nós/esporos menores -->
+  <g fill="#4a3d28" stroke="#e8e2d5" stroke-width="1.6">
+    <circle cx="70" cy="140" r="12"/>
+    <circle cx="140" cy="60" r="10"/>
+    <circle cx="250" cy="55" r="11"/>
+    <circle cx="335" cy="150" r="13"/>
+    <circle cx="320" cy="300" r="12"/>
+    <circle cx="175" cy="350" r="11"/>
+    <circle cx="75" cy="290" r="10"/>
+    <circle cx="60" cy="225" r="9"/>
+  </g>
+  <g fill="#e0a94a" opacity="0.9">
+    <circle cx="70" cy="140" r="4"/>
+    <circle cx="250" cy="55" r="4"/>
+    <circle cx="320" cy="300" r="4"/>
+    <circle cx="75" cy="290" r="4"/>
+  </g>
+
+  <!-- massa central -->
+  <circle cx="200" cy="205" r="52" fill="#382c1c" stroke="#e8e2d5" stroke-width="3"/>
+  <circle cx="185" cy="190" r="16" fill="#241a10"/>
+  <circle cx="215" cy="200" r="12" fill="#241a10"/>
+  <circle cx="195" cy="222" r="14" fill="#241a10"/>
+  <circle cx="200" cy="205" r="10" fill="#e0a94a"/>
+</svg>

@@ -1,0 +1,51 @@
+<svg viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A Estação Corvo-9 vista da vigia da lançadeira">
+  <defs>
+    <pattern id="hach1" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="7" stroke="#241a10" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="800" height="520" fill="#f1e6c9"/>
+
+  <!-- moldura da vigia -->
+  <path d="M0,0 L800,0 L800,60 C700,110 620,120 400,120 C180,120 100,110 0,60 Z" fill="#241a10"/>
+  <path d="M0,520 L800,520 L800,440 C700,400 620,392 400,392 C180,392 100,400 0,440 Z" fill="#241a10"/>
+  <path d="M0,0 L90,0 L60,392 L0,392 Z" fill="#241a10"/>
+  <path d="M800,0 L710,0 L740,392 L800,392 Z" fill="#241a10"/>
+
+  <!-- estrelas -->
+  <g fill="#241a10">
+    <circle cx="150" cy="170" r="2"/>
+    <circle cx="210" cy="240" r="1.6"/>
+    <circle cx="600" cy="160" r="2"/>
+    <circle cx="660" cy="260" r="1.6"/>
+    <circle cx="500" cy="140" r="1.4"/>
+    <circle cx="330" cy="150" r="1.4"/>
+    <circle cx="250" cy="330" r="1.6"/>
+    <circle cx="560" cy="330" r="1.4"/>
+  </g>
+
+  <!-- cinturão de asteroides -->
+  <g fill="#241a10" opacity="0.75">
+    <ellipse cx="140" cy="330" rx="14" ry="10"/>
+    <ellipse cx="180" cy="360" rx="9" ry="7"/>
+    <ellipse cx="640" cy="320" rx="12" ry="9"/>
+    <ellipse cx="600" cy="355" rx="8" ry="6"/>
+  </g>
+
+  <!-- Estação Corvo-9 -->
+  <g>
+    <ellipse cx="420" cy="255" rx="150" ry="46" fill="none" stroke="#241a10" stroke-width="5"/>
+    <ellipse cx="420" cy="255" rx="150" ry="46" fill="url(#hach1)" opacity="0.35"/>
+    <rect x="392" y="196" width="56" height="118" rx="14" fill="#241a10"/>
+    <rect x="405" y="150" width="30" height="52" fill="#241a10"/>
+    <line x1="270" y1="255" x2="570" y2="255" stroke="#241a10" stroke-width="3"/>
+    <circle cx="300" cy="248" r="4" fill="#241a10"/>
+    <circle cx="360" cy="288" r="4" fill="#241a10"/>
+    <circle cx="480" cy="222" r="4" fill="#241a10"/>
+    <circle cx="540" cy="270" r="4" fill="#241a10"/>
+  </g>
+
+  <!-- reflexo/detalhe do vidro da vigia -->
+  <path d="M40,80 L140,60" stroke="#241a10" stroke-width="2" opacity="0.5"/>
+</svg>

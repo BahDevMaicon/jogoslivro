@@ -1,0 +1,40 @@
+<svg viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="O Hospedeiro se ergue na câmara do Setor Restrito">
+  <defs>
+    <pattern id="hach3" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#241a10" stroke-width="1"/>
+    </pattern>
+    <pattern id="hach3d" width="3.5" height="3.5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="3.5" stroke="#241a10" stroke-width="1.1"/>
+    </pattern>
+  </defs>
+
+  <rect width="800" height="520" fill="#eee0bd"/>
+
+  <!-- câmara circular, parede ao fundo -->
+  <path d="M0,520 C50,260 200,100 400,100 C600,100 750,260 800,520 Z" fill="url(#hach3)" opacity="0.5"/>
+  <ellipse cx="400" cy="500" rx="360" ry="30" fill="none" stroke="#241a10" stroke-width="3" opacity="0.6"/>
+
+  <!-- tentáculos alcançando da escuridão -->
+  <g stroke="#241a10" stroke-width="7" fill="none" stroke-linecap="round">
+    <path d="M400,300 C320,330 250,320 170,360"/>
+    <path d="M400,300 C450,330 520,325 590,365"/>
+    <path d="M400,300 C370,240 330,190 300,130"/>
+    <path d="M400,300 C440,235 480,195 520,140"/>
+  </g>
+
+  <!-- silhueta central: o Hospedeiro -->
+  <path d="M330,220 C310,270 315,330 345,400 L455,400 C482,330 488,270 468,220
+           C440,185 358,185 330,220 Z" fill="#241a10"/>
+
+  <!-- cabeça / vazio -->
+  <ellipse cx="400" cy="180" rx="46" ry="52" fill="#241a10"/>
+  <ellipse cx="400" cy="180" rx="46" ry="52" fill="none" stroke="#0f0a06" stroke-width="2"/>
+
+  <!-- pedestal com o selo, ao fundo -->
+  <rect x="372" y="440" width="56" height="40" fill="#241a10"/>
+  <circle cx="400" cy="435" r="26" fill="none" stroke="#241a10" stroke-width="4"/>
+  <circle cx="400" cy="435" r="12" fill="#241a10"/>
+
+  <!-- feixe de luz do vitral -->
+  <path d="M400,0 L470,300 L330,300 Z" fill="url(#hach3d)" opacity="0.35"/>
+</svg>

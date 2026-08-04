@@ -1,0 +1,40 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="O Hospedeiro">
+  <rect width="400" height="400" fill="#120d0a"/>
+  <rect width="400" height="400" fill="none" stroke="#e8e2d5" stroke-width="2" opacity="0.3"/>
+
+  <!-- tentáculos/membros alongados, alcançando as bordas -->
+  <g stroke="#5a4a30" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.9">
+    <path d="M190,230 C140,250 90,240 40,270"/>
+    <path d="M195,220 C160,180 130,140 90,95"/>
+    <path d="M225,215 C260,170 290,130 330,90"/>
+    <path d="M235,235 C285,250 320,245 365,275"/>
+    <path d="M215,270 C220,310 210,340 225,380"/>
+    <path d="M185,270 C175,315 180,345 160,385"/>
+  </g>
+  <g fill="#8a7a55">
+    <circle cx="40" cy="270" r="9"/>
+    <circle cx="90" cy="95" r="9"/>
+    <circle cx="330" cy="90" r="9"/>
+    <circle cx="365" cy="275" r="9"/>
+    <circle cx="225" cy="380" r="9"/>
+    <circle cx="160" cy="385" r="9"/>
+  </g>
+
+  <!-- cabos/tecnologia fundida -->
+  <g stroke="#3a3228" stroke-width="4" fill="none" opacity="0.8">
+    <path d="M175,240 C160,255 165,275 150,290"/>
+    <path d="M245,245 C262,258 258,278 275,292"/>
+  </g>
+  <rect x="140" y="288" width="14" height="8" fill="#241a10" stroke="#e8e2d5" stroke-width="1.5"/>
+  <rect x="268" y="290" width="14" height="8" fill="#241a10" stroke="#e8e2d5" stroke-width="1.5"/>
+
+  <!-- torso central, maior que humano -->
+  <path d="M150,180 C140,220 145,260 165,300 L255,300 C273,260 278,220 262,180 C240,155 172,155 150,180 Z"
+        fill="#332818" stroke="#e8e2d5" stroke-width="4"/>
+
+  <!-- rosto/vazio com brilho -->
+  <ellipse cx="208" cy="160" rx="42" ry="48" fill="#0c0906" stroke="#e8e2d5" stroke-width="3.5"/>
+  <circle cx="192" cy="155" r="7" fill="#e0a94a"/>
+  <circle cx="222" cy="152" r="6" fill="#e0a94a"/>
+  <circle cx="205" cy="178" r="4" fill="#e0473a"/>
+</svg>
