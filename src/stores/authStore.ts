@@ -13,6 +13,8 @@ export interface CurrentUser {
   status: UserStatus;
   displayName: string | null;
   avatarUrl: string | null;
+  /** Data até quando o premium pago vale (Etapa 9) — `null` quando nunca pagou ou já venceu. */
+  premiumUntil: string | null;
 }
 
 interface ProfileRow {
@@ -20,6 +22,7 @@ interface ProfileRow {
   status: UserStatus;
   display_name: string | null;
   avatar_url: string | null;
+  premium_until: string | null;
 }
 
 interface AuthState {
@@ -50,7 +53,7 @@ async function loadProfile(userId: string, email: string): Promise<CurrentUser |
   if (!supabase) return null;
   const { data, error } = await supabase
     .from("profiles")
-    .select("role, status, display_name, avatar_url")
+    .select("role, status, display_name, avatar_url, premium_until")
     .eq("id", userId)
     .single();
   if (error || !data) return null;
@@ -62,6 +65,7 @@ async function loadProfile(userId: string, email: string): Promise<CurrentUser |
     status: row.status,
     displayName: row.display_name,
     avatarUrl: row.avatar_url,
+    premiumUntil: row.premium_until,
   };
 }
 

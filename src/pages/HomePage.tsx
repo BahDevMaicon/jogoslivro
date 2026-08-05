@@ -165,9 +165,9 @@ export default function HomePage() {
             <button
               type="button"
               className="btn-primary mt-6 w-full"
-              onClick={() => navigate("/login?mode=register")}
+              onClick={() => navigate(currentUser ? "/premium" : "/login?redirect=/premium")}
             >
-              Criar conta premium
+              {currentUser ? "Assinar premium" : "Criar conta premium"}
             </button>
           </div>
         </div>

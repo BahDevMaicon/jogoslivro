@@ -14,6 +14,8 @@ import ProfilePage from "@/pages/ProfilePage";
 import MyLibraryPage from "@/pages/MyLibraryPage";
 import MyBooksPage from "@/pages/MyBooksPage";
 import SupportPage from "@/pages/SupportPage";
+import PremiumPage from "@/pages/PremiumPage";
+import PremiumReturnPage from "@/pages/PremiumReturnPage";
 import AdminPage from "@/pages/AdminPage";
 import { useSettingsStore } from "@/stores/settingsStore";
 import { useEffect } from "react";
@@ -55,6 +57,22 @@ export default function App() {
             element={
               <RequireAuth>
                 <SupportPage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/premium"
+            element={
+              <RequireAuth>
+                <PremiumPage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/premium/retorno"
+            element={
+              <RequireAuth>
+                <PremiumReturnPage />
               </RequireAuth>
             }
           />

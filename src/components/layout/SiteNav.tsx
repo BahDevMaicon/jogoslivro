@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { BookOpen, Info, LibraryBig, LifeBuoy, LogIn, LogOut, PenSquare, Shield, User, UserPlus } from "lucide-react";
+import { BookOpen, Crown, Info, LibraryBig, LifeBuoy, LogIn, LogOut, PenSquare, Shield, User, UserPlus } from "lucide-react";
 import { useAuthStore } from "@/stores/authStore";
 import { BrandMark } from "./BrandMark";
 
@@ -8,6 +8,7 @@ export function SiteNav() {
   const navigate = useNavigate();
   const currentUser = useAuthStore((s) => s.currentUser);
   const logout = useAuthStore((s) => s.logout);
+  const isPremiumActive = Boolean(currentUser?.premiumUntil && new Date(currentUser.premiumUntil) > new Date());
 
   return (
     <nav className="mb-6 flex flex-wrap items-center justify-between gap-3 text-sm">
@@ -30,6 +31,14 @@ export function SiteNav() {
             <Link to="/suporte" className="flex items-center gap-1.5 text-parchment-400 hover:text-ember-400">
               <LifeBuoy className="h-3.5 w-3.5" aria-hidden="true" /> Suporte
             </Link>
+            {currentUser.role !== "admin" && (
+              <Link to="/premium" className="flex items-center gap-1.5 text-parchment-400 hover:text-ember-400">
+                <Crown className="h-3.5 w-3.5" aria-hidden="true" />
+                {isPremiumActive
+                  ? `Premium até ${new Date(currentUser.premiumUntil!).toLocaleDateString("pt-BR")}`
+                  : "Seja Premium"}
+              </Link>
+            )}
           </>
         )}
 
