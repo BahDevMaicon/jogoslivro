@@ -46,8 +46,8 @@ function AlertCard({ kind, onDismiss }: { kind: "rest" | "eat"; onDismiss: () =>
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.3 }}
     >
-      <Icon className="h-6 w-6 text-ember-500" aria-hidden="true" />
-      <p className="font-display text-nightwood-900">{message}</p>
+      <Icon className="h-6 w-6 text-ember-400" aria-hidden="true" />
+      <p className="font-display text-parchment-50">{message}</p>
     </motion.div>
   );
 }
