@@ -1,7 +1,9 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { ErrorBoundary } from "@/components/layout/ErrorBoundary";
 import { AppBackground } from "@/components/layout/AppBackground";
+import { SiteFooter } from "@/components/layout/SiteFooter";
 import { RequireAuth } from "@/components/layout/RequireAuth";
+import { logPageView } from "@/engine/analyticsEngine";
 import HomePage from "@/pages/HomePage";
 import LibraryPage from "@/pages/LibraryPage";
 import BookDetailsPage from "@/pages/BookDetailsPage";
@@ -19,10 +21,23 @@ import PremiumPage from "@/pages/PremiumPage";
 import PremiumReturnPage from "@/pages/PremiumReturnPage";
 import AdminPage from "@/pages/AdminPage";
 import { useSettingsStore } from "@/stores/settingsStore";
+import { useAuthStore } from "@/stores/authStore";
 import { useEffect } from "react";
+
+/** Registra cada troca de rota em `page_views` (Etapa 10) — best-effort, nunca bloqueia a navegação. */
+function usePageViewTracking() {
+  const location = useLocation();
+  const currentUser = useAuthStore((s) => s.currentUser);
+
+  useEffect(() => {
+    void logPageView(location.pathname, currentUser?.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
+}
 
 export default function App() {
   const theme = useSettingsStore((s) => s.settings.theme);
+  usePageViewTracking();
 
   useEffect(() => {
     document.documentElement.classList.toggle("theme-parchment", theme === "parchment");
@@ -115,6 +130,7 @@ export default function App() {
           <Route path="/book/:bookId/play" element={<ReadingPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        <SiteFooter />
       </div>
     </ErrorBoundary>
   );

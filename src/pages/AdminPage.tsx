@@ -1,14 +1,15 @@
 import { useState } from "react";
-import { BookOpen, LifeBuoy, Shield, Users } from "lucide-react";
+import { BarChart3, BookOpen, LifeBuoy, Shield, Users } from "lucide-react";
 import { SiteNav } from "@/components/layout/SiteNav";
 import { AdminUsersTab } from "@/components/admin/AdminUsersTab";
 import { AdminBooksTab } from "@/components/admin/AdminBooksTab";
 import { AdminSupportTab } from "@/components/admin/AdminSupportTab";
+import { AdminMetricsTab } from "@/components/admin/AdminMetricsTab";
 
-type AdminTab = "usuarios" | "livros" | "suporte";
+type AdminTab = "metricas" | "usuarios" | "livros" | "suporte";
 
 export default function AdminPage() {
-  const [tab, setTab] = useState<AdminTab>("usuarios");
+  const [tab, setTab] = useState<AdminTab>("metricas");
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6">
@@ -19,6 +20,15 @@ export default function AdminPage() {
       </header>
 
       <nav className="mb-6 flex gap-2 border-b border-parchment-700/30 pb-3">
+        <button
+          type="button"
+          className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm transition ${
+            tab === "metricas" ? "bg-ember-600/20 text-ember-300" : "text-parchment-300 hover:bg-nightwood-800"
+          }`}
+          onClick={() => setTab("metricas")}
+        >
+          <BarChart3 className="h-4 w-4" aria-hidden="true" /> Métricas
+        </button>
         <button
           type="button"
           className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm transition ${
@@ -48,11 +58,15 @@ export default function AdminPage() {
         </button>
       </nav>
 
-      <div className="parchment-card p-5">
-        {tab === "usuarios" && <AdminUsersTab />}
-        {tab === "livros" && <AdminBooksTab />}
-        {tab === "suporte" && <AdminSupportTab />}
-      </div>
+      {tab === "metricas" ? (
+        <AdminMetricsTab />
+      ) : (
+        <div className="parchment-card p-5">
+          {tab === "usuarios" && <AdminUsersTab />}
+          {tab === "livros" && <AdminBooksTab />}
+          {tab === "suporte" && <AdminSupportTab />}
+        </div>
+      )}
     </div>
   );
 }
