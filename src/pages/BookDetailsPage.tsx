@@ -26,6 +26,7 @@ import { BookDiscussionTab } from "@/components/book/BookDiscussionTab";
 import { BookOwnerPanel } from "@/components/book/BookOwnerPanel";
 import { BookRatingsTab } from "@/components/book/BookRatingsTab";
 import { BookStatsTab } from "@/components/book/BookStatsTab";
+import { ShareButtons } from "@/components/book/ShareButtons";
 import { StarRating } from "@/components/book/StarRating";
 import { SiteNav } from "@/components/layout/SiteNav";
 import {
@@ -157,6 +158,7 @@ export default function BookDetailsPage() {
               </>
             )}
           </div>
+          <ShareButtons title={book.title} url={`${window.location.origin}/book/${book.id}`} />
         </div>
 
         {/* Ações do leitor */}

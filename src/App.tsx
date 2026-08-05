@@ -10,6 +10,7 @@ import ReadingPage from "@/pages/ReadingPage";
 import BookEditorPage from "@/pages/BookEditorPage";
 import LoginPage from "@/pages/LoginPage";
 import AboutPage from "@/pages/AboutPage";
+import HowToCreatePage from "@/pages/HowToCreatePage";
 import ProfilePage from "@/pages/ProfilePage";
 import MyLibraryPage from "@/pages/MyLibraryPage";
 import MyBooksPage from "@/pages/MyBooksPage";
@@ -36,6 +37,7 @@ export default function App() {
           <Route path="/biblioteca" element={<LibraryPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/sobre" element={<AboutPage />} />
+          <Route path="/como-criar" element={<HowToCreatePage />} />
           <Route
             path="/perfil"
             element={

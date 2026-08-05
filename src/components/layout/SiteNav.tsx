@@ -25,6 +25,9 @@ export function SiteNav() {
           <Link to="/sobre" className="flex items-center gap-1.5 text-parchment-400 hover:text-ember-400">
             <Info className="h-3.5 w-3.5" aria-hidden="true" /> Sobre
           </Link>
+          <Link to="/como-criar" className="flex items-center gap-1.5 text-parchment-400 hover:text-ember-400">
+            <PenSquare className="h-3.5 w-3.5" aria-hidden="true" /> Como criar
+          </Link>
 
           {currentUser && (
             <>
