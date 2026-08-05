@@ -72,11 +72,13 @@ Deno.serve(async (req) => {
 
     await supabase.from("premium_purchases").update({ mp_preference_id: mpData.id }).eq("external_reference", externalReference);
 
-    // Com credencial de teste, `init_point` (produção) dá erro de "uma das
-    // partes é de teste" — precisa ser `sandbox_init_point`. Com credencial
-    // de produção, o Mercado Pago não devolve `sandbox_init_point`, então o
-    // fallback para `init_point` cobre os dois casos automaticamente.
-    const checkoutUrl = mpData.sandbox_init_point ?? mpData.init_point;
+    // O Mercado Pago sempre devolve os dois links (`init_point` e
+    // `sandbox_init_point`), mesmo com credencial de produção — não dá pra
+    // diferenciar pela presença do campo. Por isso o ambiente é explícito
+    // via secret `MP_ENV` ("production" | "test", default "test" por
+    // segurança — errar pro lado do sandbox nunca cobra ninguém à toa).
+    const isProduction = Deno.env.get("MP_ENV") === "production";
+    const checkoutUrl = isProduction ? mpData.init_point : mpData.sandbox_init_point ?? mpData.init_point;
 
     return jsonResponse({ init_point: checkoutUrl });
   } catch (err) {
