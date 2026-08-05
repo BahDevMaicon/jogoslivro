@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { BookOpen, Shield, Users } from "lucide-react";
+import { BookOpen, LifeBuoy, Shield, Users } from "lucide-react";
 import { SiteNav } from "@/components/layout/SiteNav";
 import { AdminUsersTab } from "@/components/admin/AdminUsersTab";
 import { AdminBooksTab } from "@/components/admin/AdminBooksTab";
+import { AdminSupportTab } from "@/components/admin/AdminSupportTab";
 
-type AdminTab = "usuarios" | "livros";
+type AdminTab = "usuarios" | "livros" | "suporte";
 
 export default function AdminPage() {
   const [tab, setTab] = useState<AdminTab>("usuarios");
@@ -36,11 +37,21 @@ export default function AdminPage() {
         >
           <BookOpen className="h-4 w-4" aria-hidden="true" /> Livros
         </button>
+        <button
+          type="button"
+          className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm transition ${
+            tab === "suporte" ? "bg-ember-600/20 text-ember-300" : "text-parchment-300 hover:bg-nightwood-800"
+          }`}
+          onClick={() => setTab("suporte")}
+        >
+          <LifeBuoy className="h-4 w-4" aria-hidden="true" /> Suporte
+        </button>
       </nav>
 
       <div className="parchment-card p-5">
         {tab === "usuarios" && <AdminUsersTab />}
         {tab === "livros" && <AdminBooksTab />}
+        {tab === "suporte" && <AdminSupportTab />}
       </div>
     </div>
   );
