@@ -3,6 +3,7 @@ import { CheckCircle2, Crown } from "lucide-react";
 import { SiteNav } from "@/components/layout/SiteNav";
 import { useAuthStore } from "@/stores/authStore";
 import { supabase } from "@/lib/supabaseClient";
+import { PREMIUM_FEATURES } from "@/lib/premiumFeatures";
 
 type PlanId = "monthly" | "annual";
 
@@ -54,6 +55,18 @@ export default function PremiumPage() {
       )}
 
       {error && <p className="mb-6 text-center text-sm text-red-300">{error}</p>}
+
+      <div className="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-3">
+        {PREMIUM_FEATURES.map((f) => (
+          <div
+            key={f.label}
+            className="flex items-center gap-2 rounded-md border border-ember-600/30 bg-ember-600/5 px-3 py-3 text-sm text-parchment-100"
+          >
+            <f.icon className="h-4 w-4 shrink-0 text-ember-400" aria-hidden="true" />
+            {f.label}
+          </div>
+        ))}
+      </div>
 
       <div className="grid gap-6 sm:grid-cols-2">
         {PLANS.map((plan) => (

@@ -16,6 +16,7 @@ import {
 import { BrandMark } from "@/components/layout/BrandMark";
 import { SiteNav } from "@/components/layout/SiteNav";
 import { useAuthStore } from "@/stores/authStore";
+import { PREMIUM_FEATURES } from "@/lib/premiumFeatures";
 
 const PLATFORM_FEATURES: { icon: typeof BookOpen; label: string; comingSoon?: boolean }[] = [
   { icon: BookOpen, label: "Leitura digital" },
@@ -34,18 +35,6 @@ const BASIC_FEATURES = [
   "Salvar progresso",
   "Avaliar livros",
   "Favoritar livros",
-];
-
-const PREMIUM_FEATURES = [
-  "Tudo do plano básico",
-  "Criar livros",
-  "Publicar livros",
-  "Biblioteca ilimitada",
-  "Upload de capas e imagens",
-  "Organização por coleções",
-  "Publicação pública ou privada",
-  "Ferramentas avançadas de criação",
-  "Acesso antecipado a novos recursos",
 ];
 
 export default function HomePage() {
@@ -157,8 +146,8 @@ export default function HomePage() {
             <h3 className="mb-4 mt-2 font-display text-lg text-parchment-50">Usuário Premium</h3>
             <ul className="flex flex-col gap-2 font-serif text-sm text-parchment-200/85">
               {PREMIUM_FEATURES.map((f) => (
-                <li key={f} className="flex items-center gap-2">
-                  <Check className="h-4 w-4 shrink-0 text-ember-400" aria-hidden="true" /> {f}
+                <li key={f.label} className="flex items-center gap-2">
+                  <f.icon className="h-4 w-4 shrink-0 text-ember-400" aria-hidden="true" /> {f.label}
                 </li>
               ))}
             </ul>
