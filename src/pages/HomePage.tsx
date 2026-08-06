@@ -13,8 +13,8 @@ import {
   Trophy,
   User,
 } from "lucide-react";
-import { BrandMark } from "@/components/layout/BrandMark";
 import { SiteNav } from "@/components/layout/SiteNav";
+import { HeroBannerCarousel } from "@/components/layout/HeroBannerCarousel";
 import { useAuthStore } from "@/stores/authStore";
 import { PREMIUM_FEATURES } from "@/lib/premiumFeatures";
 
@@ -45,33 +45,13 @@ export default function HomePage() {
     <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
       <SiteNav />
 
-      {/* Seção 1 — Hero. Imagem de fundo é um placeholder (capa de um dos livros de
-          demonstração) — trocar por arte de marketing de verdade quando existir. */}
-      <section
-        className="relative mb-16 overflow-hidden rounded-2xl border border-parchment-800/30 bg-nightwood-900 bg-cover bg-center px-6 py-20 text-center shadow-parchment sm:px-10"
-        style={{ backgroundImage: "url('/stories/fortaleza-das-sombras/salao-do-trono.png')" }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-nightwood-950/80 via-nightwood-950/70 to-nightwood-950/90" />
-        <div className="relative">
-          <div className="mb-4 flex items-center justify-center gap-2 text-ember-400">
-            <BrandMark className="h-5 w-5" />
-            <span className="font-display text-xs uppercase tracking-[0.3em]">LivroQuest</span>
-            <BrandMark className="h-5 w-5" />
-          </div>
-          <h1 className="mx-auto max-w-2xl font-display text-3xl text-parchment-50 sm:text-5xl">
-            Viva aventuras onde cada escolha muda o destino.
-          </h1>
-          <p className="mx-auto mt-4 max-w-xl font-serif text-lg text-parchment-200/85">
-            Gamebooks clássicos reimaginados: escolha o caminho, role os dados, escreva sua própria lenda.
-          </p>
-          <button
-            type="button"
-            className="btn-primary mx-auto mt-8"
-            onClick={() => navigate("/biblioteca")}
-          >
-            <Compass className="h-4 w-4" aria-hidden="true" /> Explorar Biblioteca
-          </button>
-        </div>
+      {/* Seção 1 — Hero. Carrossel com as artes de marketing de verdade (cada uma já
+          traz título/tagline/CTA desenhados na própria imagem) — sem overlay de texto por cima. */}
+      <section className="mb-16 text-center">
+        <HeroBannerCarousel />
+        <button type="button" className="btn-primary mx-auto mt-6" onClick={() => navigate("/biblioteca")}>
+          <Compass className="h-4 w-4" aria-hidden="true" /> Explorar Biblioteca
+        </button>
       </section>
 
       {/* Seção 2 — O que são Livros-Jogo */}

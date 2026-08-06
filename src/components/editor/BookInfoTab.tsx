@@ -1,7 +1,7 @@
 import type { DiceFormula, RulesConfig, StatKey } from "@/types/story";
 import { useBookEditorStore } from "@/stores/bookEditorStore";
 import { FieldGroup, NumberField, SelectField, TextareaField, TextField, ToggleField } from "./fields";
-import { ImageUploadField } from "./ImageUploadField";
+import { ImageUrlField } from "./ImageUrlField";
 
 const DICE_STATS: { key: StatKey; label: string }[] = [
   { key: "skill", label: "Habilidade" },
@@ -31,8 +31,6 @@ export function BookInfoTab() {
   const book = useBookEditorStore((s) => s.book);
   const updateMeta = useBookEditorStore((s) => s.updateMeta);
   const updateCharacterCreation = useBookEditorStore((s) => s.updateCharacterCreation);
-  const setImage = useBookEditorStore((s) => s.setImage);
-  const coverPreview = useBookEditorStore((s) => s.imageAssets.get("cover")?.previewUrl);
 
   const sectionOptions = Object.values(book.sections).map((s) => ({ value: s.id, label: s.title || s.id }));
 
@@ -70,7 +68,7 @@ export function BookInfoTab() {
             onChange={(v) => updateMeta({ ageRating: v || undefined })}
           />
         </div>
-        <ImageUploadField label="Capa" previewUrl={coverPreview} onChange={(file) => setImage("cover", file)} />
+        <ImageUrlField label="Capa" value={book.cover ?? ""} onChange={(v) => updateMeta({ cover: v || undefined })} />
         <TextareaField
           label="Regras especiais (opcional, aparece nos detalhes e na tela de Regras)"
           value={book.rulesText ?? ""}

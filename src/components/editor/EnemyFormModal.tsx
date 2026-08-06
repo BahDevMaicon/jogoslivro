@@ -3,7 +3,7 @@ import { Modal } from "@/components/layout/Modal";
 import { useBookEditorStore } from "@/stores/bookEditorStore";
 import type { StoryEnemy } from "@/types/story";
 import { NumberField, SelectField, TextareaField, TextField } from "./fields";
-import { ImageUploadField } from "./ImageUploadField";
+import { ImageUrlField } from "./ImageUrlField";
 
 function blankEnemy(): StoryEnemy {
   return { id: "", name: "", skill: 6, stamina: 6 };
@@ -18,35 +18,17 @@ interface EnemyFormModalProps {
 export function EnemyFormModal({ open, initialEnemy, onClose }: EnemyFormModalProps) {
   const items = useBookEditorStore((s) => s.book.items);
   const upsertEnemy = useBookEditorStore((s) => s.upsertEnemy);
-  const setImage = useBookEditorStore((s) => s.setImage);
-  const existingPreview = useBookEditorStore((s) =>
-    initialEnemy ? s.imageAssets.get(`enemy:${initialEnemy.id}:image`)?.previewUrl : undefined
-  );
 
   const [enemy, setEnemy] = useState<StoryEnemy>(initialEnemy ?? blankEnemy());
-  const [imageChange, setImageChange] = useState<File | null | "keep">("keep");
-  const [localPreview, setLocalPreview] = useState<string | undefined>(undefined);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (open) {
       setEnemy(initialEnemy ?? blankEnemy());
-      setImageChange("keep");
       setError(null);
     }
   }, [open, initialEnemy]);
 
-  useEffect(() => {
-    if (imageChange === "keep" || imageChange === null) {
-      setLocalPreview(undefined);
-      return;
-    }
-    const url = URL.createObjectURL(imageChange);
-    setLocalPreview(url);
-    return () => URL.revokeObjectURL(url);
-  }, [imageChange]);
-
-  const previewUrl = imageChange === "keep" ? existingPreview : imageChange === null ? undefined : localPreview;
   const itemOptions = items.map((i) => ({ value: i.id, label: i.name }));
 
   function handleSubmit() {
@@ -55,9 +37,6 @@ export function EnemyFormModal({ open, initialEnemy, onClose }: EnemyFormModalPr
       return;
     }
     upsertEnemy(enemy);
-    if (imageChange !== "keep") {
-      setImage(`enemy:${enemy.id}:image`, imageChange);
-    }
     onClose();
   }
 
@@ -82,7 +61,11 @@ export function EnemyFormModal({ open, initialEnemy, onClose }: EnemyFormModalPr
         </div>
 
         <TextareaField label="Descrição (opcional)" value={enemy.description ?? ""} onChange={(v) => setEnemy((p) => ({ ...p, description: v || undefined }))} />
-        <ImageUploadField label="Imagem (opcional)" previewUrl={previewUrl} onChange={setImageChange} />
+        <ImageUrlField
+          label="Imagem (opcional)"
+          value={enemy.image ?? ""}
+          onChange={(v) => setEnemy((p) => ({ ...p, image: v || undefined }))}
+        />
         <TextareaField
           label="Texto ao derrotar (opcional)"
           value={enemy.defeatText ?? ""}

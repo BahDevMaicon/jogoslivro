@@ -6,6 +6,7 @@ import { useLibraryStore } from "@/stores/libraryStore";
 import { supabase } from "@/lib/supabaseClient";
 import { ConfirmDialog } from "@/components/layout/ConfirmDialog";
 import { TextField, ToggleField, NumberField } from "@/components/editor/fields";
+import { ImageUrlField } from "@/components/editor/ImageUrlField";
 
 interface BookOwnerPanelProps {
   entry: LibraryBookEntry;
@@ -166,7 +167,7 @@ export function BookOwnerPanel({ entry, onDeleted }: BookOwnerPanelProps) {
             <h3 className="mb-2 flex items-center gap-2 font-display text-sm uppercase tracking-wide text-ember-400">
               <Image className="h-4 w-4" aria-hidden="true" /> Capa
             </h3>
-            <TextField label="URL da imagem" value={coverUrl} onChange={setCoverUrl} placeholder="https://..." />
+            <ImageUrlField label="URL da imagem" value={coverUrl} onChange={setCoverUrl} />
             <button type="button" className="btn-secondary mt-3" disabled={busy} onClick={handleSaveCover}>
               {saved === "cover" ? "Salvo!" : "Salvar capa"}
             </button>

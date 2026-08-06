@@ -152,7 +152,7 @@ Cada seção (a chave do objeto deve ser igual ao \`id\` interno):
 
 Uma seção pode incluir **uma** ilustração, exibida entre o título e o primeiro parágrafo, como uma prancha inserida na página:
 
-- Caminho do arquivo: coloque a imagem em \`public/stories/<seu-id>/nome-do-arquivo.png\` (ou \`.webp\`/\`.jpg\`) e referencie com \`"image": "/stories/<seu-id>/nome-do-arquivo.png"\` (mesmo esquema de caminho absoluto usado em \`cover\`).
+- Caminho do arquivo: coloque a imagem em \`public/stories/<seu-id>/nome-do-arquivo.png\` (ou \`.webp\`/\`.jpg\`) e referencie com \`"image": "/stories/<seu-id>/nome-do-arquivo.png"\` (mesmo esquema de caminho absoluto usado em \`cover\`) — válido para quem importa o livro por pasta (\`story.json\` + arquivos juntos). Alternativa igualmente válida em qualquer campo de imagem (\`cover\`, \`image\`, \`examineImage\`): uma URL pública já hospedada (\`https://...\`), como no editor visual, que trabalha só com URLs e mostra pré-visualização ao vivo.
 - A tela de leitura aplica um blend de multiplicação (\`mix-blend-mode: multiply\`) para a imagem se fundir com o papel do pergaminho — funciona melhor com **ilustrações em tinta/gravura de fundo claro** (preto e branco ou sépia, como xilogravuras ou desenhos a nanquim), evite fotos com fundos coloridos sólidos ou muito escuros, pois o blend pode escurecê-los demais.
 - A imagem é opcional em toda seção; use com moderação, em momentos-chave da narrativa (chegada a um lugar importante, revelação de um inimigo, um item marcante), não em toda seção.
 - Não é necessário definir largura/altura — a engine ajusta automaticamente mantendo a proporção original do arquivo.

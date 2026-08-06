@@ -4,7 +4,7 @@ import { Modal } from "@/components/layout/Modal";
 import { useBookEditorStore } from "@/stores/bookEditorStore";
 import type { Choice, StorySection } from "@/types/story";
 import { FieldGroup, NumberField, SelectField, TextareaField, TextField, ToggleField } from "./fields";
-import { ImageUploadField } from "./ImageUploadField";
+import { ImageUrlField } from "./ImageUrlField";
 import { ActionEditor } from "./ActionEditor";
 import { ConditionEditor } from "./ConditionEditor";
 
@@ -34,38 +34,19 @@ interface SectionFormModalProps {
 export function SectionFormModal({ open, initialSection, onClose }: SectionFormModalProps) {
   const book = useBookEditorStore((s) => s.book);
   const upsertSection = useBookEditorStore((s) => s.upsertSection);
-  const setImage = useBookEditorStore((s) => s.setImage);
-  const existingPreview = useBookEditorStore((s) =>
-    initialSection ? s.imageAssets.get(`section:${initialSection.id}:image`)?.previewUrl : undefined
-  );
 
   const [section, setSection] = useState<StorySection>(
     initialSection ?? blankSection(nextSectionId(Object.keys(book.sections)))
   );
-  const [imageChange, setImageChange] = useState<File | null | "keep">("keep");
-  const [localPreview, setLocalPreview] = useState<string | undefined>(undefined);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (open) {
       setSection(initialSection ?? blankSection(nextSectionId(Object.keys(book.sections))));
-      setImageChange("keep");
       setError(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, initialSection]);
-
-  useEffect(() => {
-    if (imageChange === "keep" || imageChange === null) {
-      setLocalPreview(undefined);
-      return;
-    }
-    const url = URL.createObjectURL(imageChange);
-    setLocalPreview(url);
-    return () => URL.revokeObjectURL(url);
-  }, [imageChange]);
-
-  const previewUrl = imageChange === "keep" ? existingPreview : imageChange === null ? undefined : localPreview;
 
   const itemOptions = book.items.map((i) => ({ value: i.id, label: i.name }));
   const enemyOptions = book.enemies.map((e) => ({ value: e.id, label: e.name }));
@@ -103,9 +84,6 @@ export function SectionFormModal({ open, initialSection, onClose }: SectionFormM
       return;
     }
     upsertSection(section);
-    if (imageChange !== "keep") {
-      setImage(`section:${section.id}:image`, imageChange);
-    }
     onClose();
   }
 
@@ -271,7 +249,11 @@ export function SectionFormModal({ open, initialSection, onClose }: SectionFormM
           </button>
         </div>
 
-        <ImageUploadField label="Imagem da seção (opcional)" previewUrl={previewUrl} onChange={setImageChange} />
+        <ImageUrlField
+          label="Imagem da seção (opcional)"
+          value={section.image ?? ""}
+          onChange={(v) => setSection((p) => ({ ...p, image: v || undefined }))}
+        />
 
         <FieldGroup title="Ações ao entrar na seção (opcional)">
           <ActionEditor

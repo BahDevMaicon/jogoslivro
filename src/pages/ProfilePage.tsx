@@ -3,6 +3,7 @@ import { Save, ShieldAlert, ShieldCheck, UserCircle } from "lucide-react";
 import { SiteNav } from "@/components/layout/SiteNav";
 import { useAuthStore } from "@/stores/authStore";
 import { supabase } from "@/lib/supabaseClient";
+import { ImageUrlField } from "@/components/editor/ImageUrlField";
 
 const ROLE_LABEL: Record<string, string> = {
   admin: "Administrador geral",
@@ -123,18 +124,7 @@ export default function ProfilePage() {
             />
           </label>
 
-          <label className="block">
-            <span className="mb-1 block font-display text-sm uppercase tracking-wide text-ember-400">
-              URL do avatar
-            </span>
-            <input
-              type="url"
-              placeholder="https://..."
-              className="w-full rounded-md border border-parchment-700/40 bg-nightwood-900 px-4 py-3 font-serif text-parchment-50 outline-none focus-visible:border-ember-400"
-              value={avatarUrl}
-              onChange={(e) => setAvatarUrl(e.target.value)}
-            />
-          </label>
+          <ImageUrlField label="URL do avatar" value={avatarUrl} onChange={setAvatarUrl} />
 
           <div className="grid grid-cols-2 gap-4">
             <label className="block">

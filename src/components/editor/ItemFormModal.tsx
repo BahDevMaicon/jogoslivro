@@ -6,7 +6,7 @@ import type { ItemEffect, ItemKind, StatKey, StoryItem } from "@/types/story";
 import { NumberField, SelectField, TextareaField, TextField, ToggleField } from "./fields";
 import { STAT_OPTIONS } from "./constants";
 import { IconPicker } from "./IconPicker";
-import { ImageUploadField } from "./ImageUploadField";
+import { ImageUrlField } from "./ImageUrlField";
 
 const KIND_OPTIONS: { value: ItemKind; label: string }[] = [
   { value: "weapon", label: "Arma" },
@@ -28,35 +28,16 @@ interface ItemFormModalProps {
 
 export function ItemFormModal({ open, initialItem, onClose }: ItemFormModalProps) {
   const upsertItem = useBookEditorStore((s) => s.upsertItem);
-  const setImage = useBookEditorStore((s) => s.setImage);
-  const existingPreview = useBookEditorStore((s) =>
-    initialItem ? s.imageAssets.get(`item:${initialItem.id}:examineImage`)?.previewUrl : undefined
-  );
 
   const [item, setItem] = useState<StoryItem>(initialItem ?? blankItem());
-  const [imageChange, setImageChange] = useState<File | null | "keep">("keep");
-  const [localPreview, setLocalPreview] = useState<string | undefined>(undefined);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (open) {
       setItem(initialItem ?? blankItem());
-      setImageChange("keep");
       setError(null);
     }
   }, [open, initialItem]);
-
-  useEffect(() => {
-    if (imageChange === "keep" || imageChange === null) {
-      setLocalPreview(undefined);
-      return;
-    }
-    const url = URL.createObjectURL(imageChange);
-    setLocalPreview(url);
-    return () => URL.revokeObjectURL(url);
-  }, [imageChange]);
-
-  const previewUrl = imageChange === "keep" ? existingPreview : imageChange === null ? undefined : localPreview;
 
   function updateEffect(index: number, patch: Partial<ItemEffect>) {
     setItem((prev) => ({
@@ -71,9 +52,6 @@ export function ItemFormModal({ open, initialItem, onClose }: ItemFormModalProps
       return;
     }
     upsertItem(item);
-    if (imageChange !== "keep") {
-      setImage(`item:${item.id}:examineImage`, imageChange);
-    }
     onClose();
   }
 
@@ -153,7 +131,11 @@ export function ItemFormModal({ open, initialItem, onClose }: ItemFormModalProps
           value={item.examineText ?? ""}
           onChange={(v) => setItem((p) => ({ ...p, examineText: v || undefined }))}
         />
-        <ImageUploadField label="Imagem ao olhar (opcional)" previewUrl={previewUrl} onChange={setImageChange} />
+        <ImageUrlField
+          label="Imagem ao olhar (opcional)"
+          value={item.examineImage ?? ""}
+          onChange={(v) => setItem((p) => ({ ...p, examineImage: v || undefined }))}
+        />
 
         <div className="mt-2 flex justify-end gap-2">
           <button type="button" className="btn-secondary" onClick={onClose}>

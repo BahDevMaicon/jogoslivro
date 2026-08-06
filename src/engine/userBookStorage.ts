@@ -3,20 +3,6 @@ import { BOOK_REGISTRY } from "@/stories/registry";
 import { loadBookFromData, type BookLoadResult } from "@/engine/bookLoader";
 import { supabase } from "@/lib/supabaseClient";
 
-function collectReferencedBasenames(book: GameBook): Set<string> {
-  const basenames = new Set<string>();
-  const add = (path: string | undefined) => {
-    if (!path) return;
-    const basename = path.split("/").pop()?.toLowerCase();
-    if (basename) basenames.add(basename);
-  };
-  add(book.cover);
-  for (const item of book.items) add(item.examineImage);
-  for (const enemy of book.enemies) add(enemy.image);
-  for (const section of Object.values(book.sections)) add(section.image);
-  return basenames;
-}
-
 /**
  * Persistência de livros-jogo adicionados pelo usuário via upload de pasta,
  * usando IndexedDB (localStorage seria pequeno demais para imagens). O
@@ -236,15 +222,15 @@ export interface SaveEditorBookResult {
 
 /**
  * Grava um livro montado pelo editor visual (`bookEditorStore`). Valida com
- * as mesmas regras de `saveUserBook`/`loadUserBook` (`loadBookFromData`),
- * recusa ids duplicados na criação, e mantém `ASSET_STORE` sincronizado com
- * as imagens realmente referenciadas pelo livro (remove blobs órfãos antes
- * de gravar os novos/atuais).
+ * as mesmas regras de `saveUserBook`/`loadUserBook` (`loadBookFromData`) e
+ * recusa ids duplicados na criação. Campos de imagem já chegam como URL
+ * (ver `ImageUrlField`) — não há mais Blob nenhum vindo do editor, então só
+ * `META_STORE` é gravado; `ASSET_STORE` fica reservado para o fluxo de
+ * importação por pasta (`saveUserBook`).
  */
 export async function saveEditorBook(
   id: string,
   book: GameBook,
-  assets: Map<string, Blob>,
   options: { isNew: boolean }
 ): Promise<SaveEditorBookResult> {
   const result = loadBookFromData(book);
@@ -260,25 +246,9 @@ export async function saveEditorBook(
   }
 
   const db = await openDB();
-  const tx = db.transaction([META_STORE, ASSET_STORE], "readwrite");
+  const tx = db.transaction(META_STORE, "readwrite");
   const meta: UserBookMeta = { id, storyJson: JSON.stringify(result.book), addedAt: new Date().toISOString() };
   tx.objectStore(META_STORE).put(meta);
-
-  const assetStore = tx.objectStore(ASSET_STORE);
-  const prefix = `${id}:`;
-  const existingKeys = await idbRequest<IDBValidKey[]>(assetStore.getAllKeys());
-  const referenced = collectReferencedBasenames(result.book);
-  for (const key of existingKeys) {
-    if (typeof key !== "string" || !key.startsWith(prefix)) continue;
-    const basename = key.slice(prefix.length);
-    if (!referenced.has(basename)) assetStore.delete(key);
-  }
-
-  for (const [basename, blob] of assets) {
-    if (!referenced.has(basename.toLowerCase())) continue;
-    const record: AssetRecord = { key: `${id}:${basename.toLowerCase()}`, blob };
-    assetStore.put(record);
-  }
 
   await idbTxDone(tx);
   return { success: true };
