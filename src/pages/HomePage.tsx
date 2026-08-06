@@ -99,7 +99,7 @@ export default function HomePage() {
         <button
           type="button"
           className="btn-secondary"
-          onClick={() => navigate("/book/fortaleza-das-sombras")}
+          onClick={() => navigate("/book/estacao-corvo-9")}
         >
           <BookOpen className="h-4 w-4" aria-hidden="true" /> Ler Aventura de Demonstração
         </button>
