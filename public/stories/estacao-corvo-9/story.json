@@ -6,6 +6,7 @@
   "description": "Um farol de socorro automático repete o mesmo sinal há dias: 'Corvo-9, contenção comprometida, todas as mãos...' e nada mais. Você é o único inspetor a poucas horas de distância, e a empresa quer respostas antes que outra nave chegue primeiro.",
   "genre": "Ficção científica",
   "estimatedDuration": "1-2 horas (livro curto, completo)",
+  "cover": "/stories/estacao-corvo-9/capa.png",
   "rulesText": "Este é um livro curto e autocontido, pensado como teste da engine. A Estação Corvo-9 está isolada — não há como pedir ajuda de fora. Gerencie bem suas provisões (rações de emergência) e não hesite em recuar de um combate que pareça perdido.",
   "rules": {
     "useDefaultRules": true,
