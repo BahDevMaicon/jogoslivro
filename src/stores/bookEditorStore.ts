@@ -7,6 +7,7 @@ import type {
   StorySection,
 } from "@/types/story";
 import { loadUserBookRaw, saveEditorBook, syncBookToSupabase } from "@/engine/userBookStorage";
+import { loadBookFromData } from "@/engine/bookLoader";
 import { useLibraryStore } from "@/stores/libraryStore";
 import { useAuthStore } from "@/stores/authStore";
 
@@ -44,6 +45,8 @@ interface BookEditorState {
 
   loadForCreate: () => void;
   loadForEdit: (id: string) => Promise<void>;
+  /** Importa um `story.json` (gerado por IA ou trazido de outro lugar) direto para o formulário de criação, sem envio de arquivo. */
+  importFromJson: (data: unknown) => boolean;
   updateMeta: (patch: Partial<GameBook>) => void;
   updateCharacterCreation: (patch: Partial<CharacterCreationRules>) => void;
   upsertItem: (item: StoryItem) => void;
@@ -85,6 +88,16 @@ export const useBookEditorStore = create<BookEditorState>((set, get) => ({
     }
 
     set({ mode: "edit", originalId: id, book: raw.book, errors: [], loading: false, loadError: null });
+  },
+
+  importFromJson: (data) => {
+    const result = loadBookFromData(data);
+    if (!result.success || !result.book) {
+      set({ errors: result.errors ?? ["O arquivo não contém um livro válido."] });
+      return false;
+    }
+    set({ mode: "create", originalId: null, book: result.book, errors: [], loadError: null });
+    return true;
   },
 
   updateMeta: (patch) => set((s) => ({ book: { ...s.book, ...patch } })),

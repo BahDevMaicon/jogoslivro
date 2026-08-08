@@ -83,8 +83,9 @@ export default function HowToCreatePage() {
           <FolderUp className="h-5 w-5 text-ember-400" aria-hidden="true" /> Depois de gerar o story.json
         </h2>
         <p className="font-serif text-parchment-200/85">
-          Coloque o <code>story.json</code> e as imagens que ele referencia juntos numa única pasta. Na Biblioteca, use
-          o botão "Adicionar livro (pasta)" para importar — disponível para contas Premium e administradores.
+          Abra o editor visual e use o botão "Importar JSON" — o arquivo é carregado direto no formulário de criação,
+          com todas as imagens já por URL (nenhum arquivo é enviado). Dá pra revisar e ajustar qualquer detalhe antes
+          de clicar em "Salvar". Disponível para contas Premium e administradores.
         </p>
       </div>
 

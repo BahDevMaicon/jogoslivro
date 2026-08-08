@@ -4,12 +4,14 @@ import { loadBookFromData, type BookLoadResult } from "@/engine/bookLoader";
 import { supabase } from "@/lib/supabaseClient";
 
 /**
- * Persistência de livros-jogo adicionados pelo usuário via upload de pasta,
- * usando IndexedDB (localStorage seria pequeno demais para imagens). O
- * `story.json` fica salvo como texto; cada outro arquivo da pasta é salvo
- * como Blob, indexado pelo nome do arquivo (minúsculo) prefixado pelo id do
- * livro. Ao carregar, `cover`/`section.image` que casem com o nome de um
- * arquivo enviado são reescritos para uma URL `blob:` local.
+ * Persistência de livros-jogo do usuário em IndexedDB (localStorage seria
+ * pequeno demais para armazenar muitos livros). O `story.json` fica salvo
+ * como texto em `META_STORE`. `ASSET_STORE` guarda blobs de imagem locais —
+ * hoje só existe para servir livros importados antes da mudança para imagens
+ * por URL (`ImageUrlField`); nenhum fluxo novo grava Blob ali. Ao carregar,
+ * `cover`/`section.image` que casem com o nome de um desses blobs legados
+ * são reescritos para uma URL `blob:` local; o restante (URLs normais) passa
+ * direto.
  */
 
 const DB_NAME = "livro-jogo:user-books";
@@ -71,57 +73,6 @@ export async function listUserBookIds(): Promise<string[]> {
 export async function bookIdExists(id: string): Promise<boolean> {
   const existingIds = new Set([...BOOK_REGISTRY.map((e) => e.id), ...(await listUserBookIds())]);
   return existingIds.has(id);
-}
-
-export interface SaveUserBookResult {
-  success: boolean;
-  id?: string;
-  /** Forma crua do livro salvo (mesmo objeto validado, sem URLs `blob:`) — usada para sincronizar com o Supabase. */
-  book?: GameBook;
-  errors?: string[];
-}
-
-/** Recebe os arquivos de uma pasta (via <input webkitdirectory>) e salva o livro localmente. */
-export async function saveUserBook(files: File[]): Promise<SaveUserBookResult> {
-  const storyFile = files.find((f) => f.name.toLowerCase() === "story.json");
-  if (!storyFile) {
-    return { success: false, errors: ['Nenhum arquivo "story.json" foi encontrado na pasta selecionada.'] };
-  }
-
-  let data: unknown;
-  try {
-    data = JSON.parse(await storyFile.text());
-  } catch {
-    return { success: false, errors: ['O arquivo "story.json" não contém um JSON válido.'] };
-  }
-
-  const result = loadBookFromData(data);
-  if (!result.success || !result.book) {
-    return { success: false, errors: result.errors ?? ["Livro inválido."] };
-  }
-
-  const id = result.book.id;
-  if (await bookIdExists(id)) {
-    return {
-      success: false,
-      errors: [`Já existe um livro com o id "${id}". Altere o campo "id" no story.json e tente novamente.`],
-    };
-  }
-
-  const db = await openDB();
-  const tx = db.transaction([META_STORE, ASSET_STORE], "readwrite");
-  const meta: UserBookMeta = { id, storyJson: JSON.stringify(data), addedAt: new Date().toISOString() };
-  tx.objectStore(META_STORE).put(meta);
-
-  const assetStore = tx.objectStore(ASSET_STORE);
-  for (const file of files) {
-    if (file === storyFile) continue;
-    const record: AssetRecord = { key: `${id}:${file.name.toLowerCase()}`, blob: file };
-    assetStore.put(record);
-  }
-
-  await idbTxDone(tx);
-  return { success: true, id, book: result.book };
 }
 
 function resolveAssetPath(path: string | undefined, assets: Map<string, Blob>): string | undefined {
@@ -221,12 +172,12 @@ export interface SaveEditorBookResult {
 }
 
 /**
- * Grava um livro montado pelo editor visual (`bookEditorStore`). Valida com
- * as mesmas regras de `saveUserBook`/`loadUserBook` (`loadBookFromData`) e
+ * Grava um livro montado pelo editor visual (`bookEditorStore`), seja criado
+ * do zero ou carregado a partir de um JSON importado (`importFromJson`).
+ * Valida com as mesmas regras de `loadUserBook` (`loadBookFromData`) e
  * recusa ids duplicados na criação. Campos de imagem já chegam como URL
- * (ver `ImageUrlField`) — não há mais Blob nenhum vindo do editor, então só
- * `META_STORE` é gravado; `ASSET_STORE` fica reservado para o fluxo de
- * importação por pasta (`saveUserBook`).
+ * (ver `ImageUrlField`) — não há Blob nenhum vindo do editor, então só
+ * `META_STORE` é gravado.
  */
 export async function saveEditorBook(
   id: string,

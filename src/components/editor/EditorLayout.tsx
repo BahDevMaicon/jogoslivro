@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
+import { useRef, type ChangeEvent, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
-import { AlertTriangle, ArrowLeft, BookOpen, Save, Skull, ScrollText, Sparkles, User } from "lucide-react";
+import { AlertTriangle, ArrowLeft, BookOpen, FileJson, Save, Skull, ScrollText, Sparkles, User } from "lucide-react";
 import { useBookEditorStore } from "@/stores/bookEditorStore";
 import { SiteNav } from "@/components/layout/SiteNav";
 
@@ -26,13 +26,27 @@ export function EditorLayout({ activeTab, onTabChange, children }: EditorLayoutP
   const errors = useBookEditorStore((s) => s.errors);
   const saving = useBookEditorStore((s) => s.saving);
   const save = useBookEditorStore((s) => s.save);
+  const importFromJson = useBookEditorStore((s) => s.importFromJson);
   const syncError = useBookEditorStore((s) => s.syncError);
+  const importInputRef = useRef<HTMLInputElement>(null);
 
   async function handleSave() {
     const result = await save();
     // Se a cópia no servidor falhou, fica na página mostrando o aviso em vez de navegar direto.
     if (result.success && result.id && !useBookEditorStore.getState().syncError) {
       navigate(`/book/${result.id}`);
+    }
+  }
+
+  async function handleImportFile(e: ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    try {
+      const data = JSON.parse(await file.text());
+      importFromJson(data);
+    } catch {
+      useBookEditorStore.setState({ errors: ["O arquivo selecionado não contém um JSON válido."] });
     }
   }
 
@@ -48,9 +62,25 @@ export function EditorLayout({ activeTab, onTabChange, children }: EditorLayoutP
             {mode === "create" ? "Criar novo livro" : `Editando: ${book.title || book.id}`}
           </h1>
         </div>
-        <button type="button" className="btn-primary" onClick={handleSave} disabled={saving}>
-          <Save className="h-4 w-4" aria-hidden="true" /> {saving ? "Salvando..." : "Salvar"}
-        </button>
+        <div className="flex items-center gap-2">
+          {mode === "create" && (
+            <>
+              <button type="button" className="btn-secondary" onClick={() => importInputRef.current?.click()}>
+                <FileJson className="h-4 w-4" aria-hidden="true" /> Importar JSON
+              </button>
+              <input
+                ref={importInputRef}
+                type="file"
+                accept="application/json,.json"
+                className="hidden"
+                onChange={handleImportFile}
+              />
+            </>
+          )}
+          <button type="button" className="btn-primary" onClick={handleSave} disabled={saving}>
+            <Save className="h-4 w-4" aria-hidden="true" /> {saving ? "Salvando..." : "Salvar"}
+          </button>
+        </div>
       </header>
 
       {errors.length > 0 && (

@@ -5,7 +5,6 @@ import { BookOpen, PenSquare, ScrollText, Sparkles } from "lucide-react";
 import { useLibraryStore } from "@/stores/libraryStore";
 import { BookCover } from "@/components/book/BookCover";
 import { accentForBookId } from "@/components/book/bookAccents";
-import { AddBookButton } from "@/components/book/AddBookButton";
 import { SiteNav } from "@/components/layout/SiteNav";
 import { TextField, SelectField } from "@/components/editor/fields";
 import { normalize } from "@/lib/text";
@@ -83,7 +82,6 @@ export default function LibraryPage() {
           Escolha uma aventura para começar. Suas escolhas moldarão o destino da história.
         </p>
         <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-          <AddBookButton onAdded={loadLibrary} />
           {canCreateBooks && (
             <button type="button" className="btn-secondary" onClick={() => navigate("/create-book")}>
               <PenSquare className="h-4 w-4" aria-hidden="true" /> Criar novo livro
