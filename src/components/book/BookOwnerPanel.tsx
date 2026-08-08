@@ -1,12 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CheckCircle2, EyeOff, Image, Lock, Pencil, ShieldAlert, Tag, Tags, Trash2, Unlock } from "lucide-react";
+import { CheckCircle2, EyeOff, Image, Link2, Pencil, ShieldAlert, Tag, Tags, Trash2 } from "lucide-react";
 import type { LibraryBookEntry } from "@/stores/libraryStore";
 import { useLibraryStore } from "@/stores/libraryStore";
 import { supabase } from "@/lib/supabaseClient";
 import { ConfirmDialog } from "@/components/layout/ConfirmDialog";
-import { TextField, ToggleField, NumberField } from "@/components/editor/fields";
+import { TextField, ToggleField, NumberField, SelectField } from "@/components/editor/fields";
 import { ImageUrlField } from "@/components/editor/ImageUrlField";
+import { VISIBILITY_LABEL, type BookVisibility } from "@/lib/bookStatus";
+
+const VISIBILITY_OPTIONS: { value: BookVisibility; label: string }[] = [
+  { value: "public", label: VISIBILITY_LABEL.public },
+  { value: "unlisted", label: VISIBILITY_LABEL.unlisted },
+  { value: "private", label: VISIBILITY_LABEL.private },
+];
 
 interface BookOwnerPanelProps {
   entry: LibraryBookEntry;
@@ -32,6 +39,8 @@ export function BookOwnerPanel({ entry, onDeleted }: BookOwnerPanelProps) {
   const [coverUrl, setCoverUrl] = useState(entry.book.cover ?? "");
   const [tagsText, setTagsText] = useState(entry.tags.join(", "));
   const [saved, setSaved] = useState<"price" | "cover" | "tags" | null>(null);
+  const [linkCopied, setLinkCopied] = useState(false);
+  const shareUrl = `${window.location.origin}/book/${entry.book.id}`;
 
   const synced = Boolean(entry.supabaseBookId);
 
@@ -57,9 +66,15 @@ export function BookOwnerPanel({ entry, onDeleted }: BookOwnerPanelProps) {
     await useLibraryStore.getState().loadLibrary();
   }
 
-  async function handleVisibilityToggle() {
-    await updateBook({ visibility: entry.visibility === "public" ? "private" : "public" });
+  async function handleVisibilityChange(visibility: string) {
+    await updateBook({ visibility });
     await useLibraryStore.getState().loadLibrary();
+  }
+
+  async function handleCopyLink() {
+    await navigator.clipboard.writeText(shareUrl);
+    setLinkCopied(true);
+    setTimeout(() => setLinkCopied(false), 2000);
   }
 
   async function handleSavePrice() {
@@ -128,17 +143,6 @@ export function BookOwnerPanel({ entry, onDeleted }: BookOwnerPanelProps) {
                 </>
               )}
             </button>
-            <button type="button" className="btn-secondary" disabled={busy} onClick={handleVisibilityToggle}>
-              {entry.visibility === "public" ? (
-                <>
-                  <Lock className="h-4 w-4" aria-hidden="true" /> Tornar privado
-                </>
-              ) : (
-                <>
-                  <Unlock className="h-4 w-4" aria-hidden="true" /> Tornar público
-                </>
-              )}
-            </button>
           </>
         )}
         <button type="button" className="btn-secondary text-red-300" onClick={() => setDeleteOpen(true)}>
@@ -148,6 +152,32 @@ export function BookOwnerPanel({ entry, onDeleted }: BookOwnerPanelProps) {
 
       {synced && (
         <div className="grid gap-6 sm:grid-cols-2">
+          <div className="sm:col-span-2">
+            <h3 className="mb-2 flex items-center gap-2 font-display text-sm uppercase tracking-wide text-ember-400">
+              <Link2 className="h-4 w-4" aria-hidden="true" /> Visibilidade
+            </h3>
+            <SelectField
+              label="Quem pode ver este livro"
+              value={entry.visibility}
+              onChange={handleVisibilityChange}
+              options={VISIBILITY_OPTIONS}
+              disabled={busy || entry.status !== "published"}
+            />
+            {entry.status !== "published" && (
+              <p className="mt-2 text-xs text-parchment-400/70">Publique o livro primeiro para poder escolher a visibilidade.</p>
+            )}
+            {entry.visibility === "unlisted" && (
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                <p className="text-xs text-parchment-300/80">
+                  Não aparece na Biblioteca oficial. Quem tiver este link consegue abrir e ler:
+                </p>
+                <button type="button" className="btn-secondary text-xs" onClick={handleCopyLink}>
+                  <Link2 className="h-3.5 w-3.5" aria-hidden="true" /> {linkCopied ? "Copiado!" : "Copiar link"}
+                </button>
+              </div>
+            )}
+          </div>
+
           <div>
             <h3 className="mb-2 flex items-center gap-2 font-display text-sm uppercase tracking-wide text-ember-400">
               <Tag className="h-4 w-4" aria-hidden="true" /> Preço

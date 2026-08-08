@@ -1,5 +1,5 @@
 export type BookStatus = "draft" | "in_review" | "published" | "rejected" | "unpublished" | "archived";
-export type BookVisibility = "public" | "private";
+export type BookVisibility = "public" | "private" | "unlisted";
 
 export const STATUS_LABEL: Record<BookStatus, string> = {
   draft: "Rascunho",
@@ -21,11 +21,13 @@ export const STATUS_BADGE_CLASS: Record<BookStatus, string> = {
 
 export const VISIBILITY_LABEL: Record<BookVisibility, string> = {
   public: "Público",
+  unlisted: "Não listado",
   private: "Privado",
 };
 
 export const VISIBILITY_BADGE_CLASS: Record<BookVisibility, string> = {
   public: "border-moss-600/40 text-moss-400",
+  unlisted: "border-amber-700/40 text-amber-300",
   private: "border-parchment-700/40 text-parchment-400/70",
 };
 

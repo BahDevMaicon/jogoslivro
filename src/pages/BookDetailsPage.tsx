@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import type { LucideIcon } from "lucide-react";
 import {
@@ -57,16 +57,39 @@ const ALL_TABS: { id: DetailsTab; label: string; icon: LucideIcon }[] = [
 export default function BookDetailsPage() {
   const { bookId } = useParams<{ bookId: string }>();
   const navigate = useNavigate();
-  const { entries, status, loadLibrary, getEntry } = useLibraryStore();
+  const { entries, status, loadLibrary, getEntry, loadEntryDirect } = useLibraryStore();
   const currentUser = useAuthStore((s) => s.currentUser);
   const [addedToLibrary, setAddedToLibrary] = useState(false);
   const [activeTab, setActiveTab] = useState<DetailsTab>("info");
+  const [notFoundConfirmed, setNotFoundConfirmed] = useState(false);
+  const fetchingDirectRef = useRef(false);
 
   useEffect(() => {
     if (entries.length === 0 && status === "idle") loadLibrary();
   }, [entries.length, status, loadLibrary]);
 
   const entry = bookId ? getEntry(bookId) : undefined;
+
+  // Livro não está no catálogo público nem nos livros locais do usuário
+  // (caso de um link direto para um livro `unlisted`, ou `private` visto
+  // pelo dono/admin em outro dispositivo) — tenta buscar direto do servidor
+  // antes de desistir. Não usa um "já tentei" travado: se uma `loadLibrary()`
+  // concorrente (StrictMode, ou uma troca de sessão) reconstruir `entries` do
+  // zero e derrubar o que acabamos de buscar, `entry` volta a ficar vazio e
+  // este efeito tenta de novo — só desiste de verdade quando `loadEntryDirect`
+  // responde `null` (RLS negou ou o livro não existe mesmo).
+  useEffect(() => {
+    if (status !== "ready" || !bookId || entry || notFoundConfirmed || fetchingDirectRef.current) return;
+    fetchingDirectRef.current = true;
+    loadEntryDirect(bookId)
+      .then((result) => {
+        if (!result) setNotFoundConfirmed(true);
+      })
+      .finally(() => {
+        fetchingDirectRef.current = false;
+      });
+  }, [status, bookId, entry, notFoundConfirmed, loadEntryDirect]);
+
   const book = entry?.book;
   const canManage = entry ? canManageBook(entry, currentUser) : false;
   const canRead = Boolean(entry?.isFree || canManage);
@@ -95,7 +118,7 @@ export default function BookDetailsPage() {
     document.getElementById("book-tabs")?.scrollIntoView({ behavior: "smooth" });
   }
 
-  if (status === "loading" || (status === "idle" && !book)) {
+  if (status === "loading" || (status === "idle" && !book) || (status === "ready" && !book && !notFoundConfirmed)) {
     return <p className="p-10 text-center font-serif text-parchment-300">Carregando...</p>;
   }
 

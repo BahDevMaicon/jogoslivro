@@ -39,6 +39,14 @@ interface LibraryState {
   getBook: (id: string) => GameBook | undefined;
   getEntry: (id: string) => LibraryBookEntry | undefined;
   removeUserBook: (id: string) => Promise<void>;
+  /**
+   * Busca direta de UM livro por slug, fora do catálogo público (que só traz
+   * `published`+`public`) — usada quando alguém abre o link de um livro
+   * `unlisted` (ou o próprio dono/admin abre um `private`) que não está em
+   * `entries`. A política de RLS decide se a leitura é permitida; se vier
+   * vazia, o livro realmente não existe ou não pode ser lido por quem pediu.
+   */
+  loadEntryDirect: (id: string) => Promise<LibraryBookEntry | null>;
 }
 
 interface SupabaseBookRow {
@@ -224,5 +232,41 @@ export const useLibraryStore = create<LibraryState>((set, get) => ({
     await deleteUserBook(id);
     if (entry?.supabaseBookId) await deleteBookFromSupabase(entry.supabaseBookId);
     await get().loadLibrary();
+  },
+
+  loadEntryDirect: async (id: string) => {
+    if (!supabase) return null;
+    const { data, error } = await supabase
+      .from("books")
+      .select(
+        "id, slug, owner_id, status, visibility, price, is_free, content_data, tags, rating_avg, rating_count, published_at"
+      )
+      .eq("slug", id)
+      .maybeSingle();
+    if (error || !data) return null;
+    const row = data as SupabaseBookRow;
+    const result = loadBookFromData(row.content_data);
+    if (!result.success || !result.book) return null;
+
+    const entry: LibraryBookEntry = {
+      book: result.book,
+      hasSave: hasSave(result.book.id),
+      isUserBook: false,
+      supabaseBookId: row.id,
+      ownerId: row.owner_id ?? undefined,
+      status: row.status,
+      visibility: row.visibility,
+      price: row.price ?? 0,
+      isFree: row.is_free ?? true,
+      tags: row.tags ?? [],
+      ratingAvg: row.rating_avg ?? 0,
+      ratingCount: row.rating_count ?? 0,
+      publishedAt: row.published_at,
+    };
+
+    set((state) => ({
+      entries: [...state.entries.filter((e) => e.book.id !== entry.book.id), entry],
+    }));
+    return entry;
   },
 }));
